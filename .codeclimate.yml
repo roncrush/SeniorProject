@@ -2,6 +2,15 @@
 engines:
   fixme:
     enabled: true
+  csslint:
+    enabled: true
+  pep8:
+    enabled: true
+  radon: 
+  enabled: true
+ 
 ratings:
-  paths: []
+   paths:
+   - "**.py"
+ 
 exclude_paths: []
