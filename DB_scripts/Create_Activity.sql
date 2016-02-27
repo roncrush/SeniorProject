@@ -1,32 +1,18 @@
-CREATE TABLE IF NOT EXISTS `mydb`.`Activity` (
-  `id` INT NOT NULL,
-  `name` VARCHAR(45) NULL,
-  `skill` INT NOT NULL,
-  `datetime` DATETIME NOT NULL,
-  `duration` INT NULL,
-  `numplayers` INT NOT NULL,
-  `private` TINYINT(1) NOT NULL,
-  `available` TINYINT(1) NOT NULL,
-  `category` INT NOT NULL,
-  `leader` INT NOT NULL,
+CREATE TABLE `activity` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `skill` int(11) DEFAULT NULL,
+  `datetime` datetime NOT NULL,
+  `duration` int(11) DEFAULT NULL,
+  `numplayers` int(11) NOT NULL,
+  `private` tinyint(1) NOT NULL,
+  `available` tinyint(1) NOT NULL,
+  `category` int(11) NOT NULL,
+  `leader` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `category_idx` (`category` ASC),
-  INDEX `skill_idx` (`skill` ASC),
-  INDEX `leader_idx` (`leader` ASC),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-  CONSTRAINT `category`
-    FOREIGN KEY (`category`)
-    REFERENCES `mydb`.`ActivityType` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `skill`
-    FOREIGN KEY (`skill`)
-    REFERENCES `mydb`.`SkillLevels` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `leader`
-    FOREIGN KEY (`leader`)
-    REFERENCES `mydb`.`User` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `category_idx` (`category`),
+  KEY `leader_idx` (`leader`),
+  CONSTRAINT `category` FOREIGN KEY (`category`) REFERENCES `activitytype` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `leader` FOREIGN KEY (`leader`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
