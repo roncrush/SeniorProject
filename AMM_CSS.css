@@ -1,0 +1,90 @@
+.sidebar {
+    height: 100%;
+    position: fixed;
+}
+
+.sidebar-profile-image {
+    margin-top: 3em;
+    text-align: center;
+}
+
+.input_form {
+    margin-top: 5em;
+    margin-left: 25em;
+
+}
+.input-field .prefix.active {
+  color: #cc0a00;
+}
+
+.main-content {
+    margin-left: 18em;
+    align-content: center;
+}
+
+.btn-floating {
+  display: inline-block;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  z-index: 5;
+  width: 20em;
+  height: 10em;
+  line-height: 50px;
+  background-color: #0006ee;
+  border-radius: 20%;
+  transition: .3s ease-out;
+  cursor: pointer;
+  vertical-align: middle;
+}
+.btn-floating a{
+  color: #FFFFFF;
+}
+
+.btn-floating i {
+  width: inherit;
+  display: inline-block;
+  text-align: center;
+  color: #fff;
+  font-size: 1.6rem;
+  line-height: 3rem;
+}
+
+.btn-floating:hover {
+  background-color: #040099;
+
+}
+
+
+
+.btn-floating:before {
+  border-radius: 0;
+}
+
+button.btn-floating {
+  border: none;
+}
+
+.activity-name {
+    padding: .20em;
+    font-size: 150%;
+}
+
+.players {
+    color: #000b9d;
+    font-size: smaller;
+    text-align: left;
+}
+
+.public {
+    text-align: right;
+    color: #53ee00;
+    font-size: smaller;
+}
+
+.private {
+    z-index: 1;
+    text-align: right;
+    color: #ff0003;
+    font-size: smaller;
+}
