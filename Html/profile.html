@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <!--Import Google Icon Font-->
@@ -11,7 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
 
     <!--Import CSS for sidebar and navbar-->
-    <link id="size-stylesheet" rel="stylesheet" href="materialize/css/AMM_CSS.css">
+    <link id="size-stylesheet" rel="stylesheet" href="../css/home-profile-style.css">
 
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -30,7 +31,7 @@
 <div class="row">
     <div class="sidebar col l2 m3 s12 cyan darken-2 z-depth-3">
         <div class="sidebar-profile-image">
-            <img class="circle responsive-img hoverable z-depth-1" src="avatar.jpg">
+            <img class="circle responsive-img hoverable z-depth-1" src="../images/avatar.jpg">
         </div>
         <div>
             <ul class="collection with-header">
@@ -43,23 +44,51 @@
             </ul>
         </div>
     </div>
-    <div class="s6" align="center">
-        <!-- Teal page content  -->
-              <br>
-              <br>
-              <br>
-              <br>
-              <br><br><br>
-              <button class="btn-floating">
-                  <a href="search_results.html">JOIN ACTIVITY</a>
-              </button>
+
+    <form class="col s10 card-panel" method="get">
+      <div>
+            <div class="input-field col s9">
+              <input disabled value="Neytiri_01" id="disabled" type="text" class="validate">
+              <label for="disabled">User Name</label>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s4">
+                  <input placeholder="Zoe" id="first_name" type="text" class="validate">
+                  <label for="first_name">First Name</label>
+                </div>
+                <div class="input-field col s4">
+                  <input placeholder="Saldana" id="last_name" type="text" class="validate">
+                  <label for="last_name">Last Name</label>
+                </div>
+            </div>
 
 
-              <button class="btn-floating">CREATE ACTIVITY</button>
+          <div class="row">
+            <div class="input-field col s9">
+              <input id="password" type="password" class="validate">
+              <label for="password">Password</label>
+            </div>
+          </div>
+            <div class="row">
+            <div class="input-field col s9">
+              <input id="password" type="password" class="validate">
+              <label for="password">Confirm Password</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s9">
+              <input placeholder="princess_Neytiri@hometree.com" id="email" type="email" class="validate">
+              <label for="email">Email</label>
+
+                <p><input type="submit" value="Done"></p>
+
+            </div>
+          </div>
 
       </div>
 
-    </div>
+    </form>
 </div>
 
 <script>
@@ -67,10 +96,12 @@
         width = parseInt(width);
         if (width < 600) {
             $(".sidebar").css("position", "relative");
-            $(".btn-floating").css("width", "95%");
-            $(".btn-floating").css("border-radius", "5%");
+            $(".input-field").css("margin-left", "2em");
+            $(".card-panel").css("margin-left", "3em")
+
         } else {
             $(".sidebar").css("position", "fixed");
+            $(".input-field").css("margin-left", "15em");
         }
     }
     $(function () {
