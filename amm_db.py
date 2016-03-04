@@ -17,6 +17,19 @@ class AmmDB(object):
 
         return rows
 
+    @staticmethod
+    def get_where_stmnt(where_query, col_name, value, operator, compare=''):
+        if where_query == "":
+            if compare == 'like':
+                return "WHERE " + col_name + " LIKE '%" + value + "%' "
+            else:
+                return "WHERE " + col_name + " = " + value
+        else:
+            if compare == 'like':
+                return " " + operator + " " + col_name + " LIKE '%" + value + "%' "
+            else:
+                return " " + operator + " " + col_name + " = " + value
+
     def check_email_exist(self, email):
         if self.conn.closed:
             self.__init__()
@@ -65,25 +78,25 @@ class AmmDB(object):
                         "VALUES ('" + name + "' , " + skill + " , '" + datetime + "' , " + duration + " , " +
                         numplayers + " , " + private + " , " + available + " ," + category + " , " + leader + ")")
 
-    def get_activity_type(self, activity_id='', name=''):
+    def get_activity_type(self, activity_type_id='', name='', operator='AND'):
         if self.conn.closed:
             self.__init__()
 
-        query = ''
+        where_query = ''
 
-        if id != '':
-            query += ("id = " + activity_id + " ")
-        if name != '':
-            if query != '':
-                query += ("AND name ='" + name + "' ")
-            else:
-                query += ("name ='" + name + "' ")
+        params = {
+            'id': activity_type_id,
+            'name': name,
+        }
 
-        if query == '':
-            self.conn.query("SELECT * FROM activitytype")
-        else:
-            self.conn.query("SELECT * FROM activitytype WHERE " + query)
+        for param, value in params.items():
+            if value != '':
+                if param == 'name':
+                    where_query += self.get_where_stmnt(where_query, param, value, operator, 'like')
+                else:
+                    where_query += self.get_where_stmnt(where_query, param, str(value), operator)
 
+        self.conn.query("SELECT * FROM activitytype " + where_query)
         data = self.conn.store_result()
 
         return self.pack(data)
@@ -93,94 +106,75 @@ class AmmDB(object):
         if self.conn.closed:
             self.__init__()
 
-        query = ''
+        where_query = ""
 
-        if id != '':
-            query += ("id = " + activity_id + " ")
-        if name != '':
-            if query != '':
-                query += (operator + " name LIKE '%" + name + "%' ")
-            else:
-                query += ("name LIKE '%" + name + "%' ")
-        if skill != '':
-            if query != '':
-                query += (operator + " skill = '" + skill + "' ")
-            else:
-                query += ("skill = '" + skill + "' ")
-        if duration != '':
-            if query != '':
-                query += (operator + " duration = '" + duration + "' ")
-            else:
-                query += ("duration = '" + duration + "' ")
-        if numplayers != '':
-            if query != '':
-                query += (operator + " numplayers > '" + numplayers + "' ")
-            else:
-                query += ("numplayers = '" + numplayers + "' ")
-        if available != '':
-            if query != '':
-                query += (operator + " available = '" + available + "' ")
-            else:
-                query += ("available = '" + available + "' ")
-        if category != '':
-            if query != '':
-                query += (operator + " category = '" + category + "' ")
-            else:
-                query += ("category = '" + category + "' ")
-        if leader != '':
-            if query != '':
-                query += (operator + " leader = '" + leader + "' ")
-            else:
-                query += ("leader = '" + leader + "' ")
+        params = {
+            'id': activity_id,
+            'name': name,
+            'skill': skill,
+            'duration': duration,
+            'numplayers': numplayers,
+            'available': available,
+            'category': category,
+            'leader': leader,
+        }
 
-        if query == '':
-            self.conn.query("SELECT * FROM activity")
-        else:
-            self.conn.query("SELECT * FROM activity WHERE " + query)
+        for param, value in params.items():
+            if value != '':
+                if param == 'name':
+                    where_query += self.get_where_stmnt(where_query, param, value, operator, 'like')
+                else:
+                    where_query += self.get_where_stmnt(where_query, param, str(value), operator)
 
+        self.conn.query("SELECT * FROM activity " + where_query)
         data = self.conn.store_result()
 
         return self.pack(data)
 
-    def get_user(self,  user_id='', uname='', email='', phone='', fn='', ln=''):
+    def get_user(self, user_id='', uname='', email='', phone='', fn='', ln='', operator='AND'):
         if self.conn.closed:
             self.__init__()
 
-        query = ''
+        where_query = ""
 
-        if id != '':
-            query += ("id = " + user_id + " ")
-        if uname != '':
-            if query != '':
-                query += ("AND uname LIKE '%" + uname + "%' ")
-            else:
-                query += ("uname LIKE '%" + uname + "%' ")
-        if email != '':
-            if query != '':
-                query += ("AND email = '" + email + "' ")
-            else:
-                query += ("email = '" + email + "' ")
-        if phone != '':
-            if query != '':
-                query += ("AND phone = '" + phone + "' ")
-            else:
-                query += ("phone = '" + phone + "' ")
-        if fn != '':
-            if query != '':
-                query += ("AND fn LIKE '%" + fn + "%' ")
-            else:
-                query += ("fn LIKE '%" + fn + "%' ")
-        if ln != '':
-            if query != '':
-                query += ("AND ln LIKE '%" + ln + "%' ")
-            else:
-                query += ("ln LIKE '%" + ln + "%' ")
+        params = {
+                'id': user_id,
+                'uname': uname,
+                'email': email,
+                'phone': phone,
+                'fn': fn,
+                'ln': ln,
+            }
 
-        if query == '':
-            self.conn.query("SELECT * FROM user")
-        else:
-            self.conn.query("SELECT * FROM user WHERE " + query)
+        for param, value in params.items():
+            if value != '':
+                if param == 'name':
+                    where_query += self.get_where_stmnt(where_query, param, value, operator, 'like')
+                else:
+                    where_query += self.get_where_stmnt(where_query, param, str(value), operator)
 
+        self.conn.query("SELECT * FROM user " + where_query)
+        data = self.conn.store_result()
+
+        return self.pack(data)
+
+    def get_user_activity(self, user_id='', activity_id='', private_app='', operator='AND'):
+        if self.conn.closed:
+            self.__init__()
+
+        where_query = ''
+
+        params = {
+            'userid': user_id,
+            'activityid': activity_id,
+            'private_application': private_app,
+        }
+
+        for param, value in params.items():
+            if value != '':
+                where_query += self.get_where_stmnt(where_query, param, str(value), operator)
+
+        self.conn.query("SELECT * FROM useractivity " + where_query)
         data = self.conn.store_result()
 
         return self.pack(data)
