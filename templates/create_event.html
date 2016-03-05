@@ -15,7 +15,7 @@
     <script src="http://maps.googleapis.com/maps/api/js"></script>
 
     <!--Import CSS for sidebar and navbar-->
-    <link id="size-stylesheet" rel="stylesheet" href="css/navbar-sidebar-style.css">
+    <link id="size-stylesheet" rel="stylesheet" href="../static/css/navbar-sidebar-style.css">
     <link rel="stylesheet" href="../static/css/create_event-style.css">
 
     <!--Let browser know website is optimized for mobile-->
@@ -173,8 +173,12 @@
                 } else {
                     bounds.extend(place.geometry.location);
                 }
+
             });
+
             map.fitBounds(bounds);
+
+
         });
     }
 
