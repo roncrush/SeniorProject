@@ -15,7 +15,7 @@ def home():
 
 
 @app.route('/profile')
-def home():
+def profile():
     return render_template('profile.html')
 
 
