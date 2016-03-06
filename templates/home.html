@@ -1,0 +1,85 @@
+<html lang="en">
+<head>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+
+    <!--Import CSS for sidebar and navbar-->
+    <link id="size-stylesheet" rel="stylesheet" href="../static/css/home-profile-style.css">
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+
+<body class="cyan darken-3">
+<div class="navbar-fixed">
+    <nav>
+        <div class="nav-wrapper z-depth-4 cyan darken-2">
+            <div class="row">
+                <div class="col l2"><a href="#" class="brand-logo">Logo</a></div>
+            </div>
+        </div>
+    </nav>
+</div>
+<div class="row">
+    <div class="sidebar col l2 m3 s12 cyan darken-2 z-depth-3">
+        <div class="sidebar-profile-image">
+            <img class="circle responsive-img hoverable z-depth-1" src="../static/images/avatar.jpg">
+        </div>
+        <div>
+            <ul class="collection with-header">
+                <li class="collection-header center-align"><h4>Username</h4></li>
+                <a href="#!" class="collection-item center-align">Home</a>
+                <a href="#!" class="collection-item center-align">View Profile</a>
+                <a href="#!" class="collection-item center-align">View Rosters</a>
+                <a href="#!" class="collection-item center-align">View Calendar</a>
+                <a href="#!" class="collection-item center-align">Logout</a>
+            </ul>
+        </div>
+    </div>
+    <div class="s6" align="center">
+        <!-- Teal page content  -->
+              <br>
+              <br>
+              <br>
+              <br>
+              <br><br><br>
+              <button class="btn-floating">
+                  <a href="search_results.html">JOIN ACTIVITY</a>
+              </button>
+
+
+              <button class="btn-floating">CREATE ACTIVITY</button>
+
+      </div>
+
+    </div>
+</div>
+
+<script>
+    function adjustStyle(width) {
+        width = parseInt(width);
+        if (width < 600) {
+            $(".sidebar").css("position", "relative");
+            $(".btn-floating").css("width", "95%");
+            $(".btn-floating").css("border-radius", "5%");
+        } else {
+            $(".sidebar").css("position", "fixed");
+        }
+    }
+    $(function () {
+        adjustStyle($(this).width());
+        $(window).resize(function () {
+            adjustStyle($(this).width());
+        });
+    });
+</script>
+
+</body>
+</html>
