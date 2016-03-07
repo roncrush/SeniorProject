@@ -123,7 +123,8 @@ class AmmDB(object):
 
         return data
 
-    def get_user(self, user_id='', uname='', email='', phone='', fn='', ln='', operator='AND', similar=False):
+    def get_user(self, user_id='', uname='', email='', phone='', fn='', ln='', operator='AND', similar=False,
+                 exact=False):
         if self.conn.closed:
             self.__init__()
 
@@ -145,7 +146,8 @@ class AmmDB(object):
                 else:
                     where_query += self.get_where_stmnt(where_query, param, str(value), operator)
 
-        print(where_query)
+        if exact and where_query == '':
+            return ''
 
         self.cursor.execute("SELECT * FROM user " + where_query)
         data = self.cursor.fetchall()
