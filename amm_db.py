@@ -3,25 +3,29 @@ import MySQLdb as mysql
 
 class AmmDB(object):
     def __init__(self):
-        self.conn = mysql.connect(host='127.0.0.1', port=3306, user='root', passwd='admin', db='mydb')
+        self.conn = mysql.connect(host='127.0.0.1', port=3306, user='admin', passwd='admin', db='mydb')
         self.cursor = self.conn.cursor(mysql.cursors.DictCursor)
+
+    def conn_check(self):
+        if self.conn.closed:
+            self.__init__()
 
     @staticmethod
     def get_where_stmnt(where_query, col_name, value, operator, compare=''):
+
         if where_query == "":
             if compare == 'like':
                 return "WHERE " + col_name + " LIKE '%" + value + "%' "
             else:
-                return "WHERE " + col_name + " = " + value
+                return "WHERE " + col_name + " = '" + value + "'"
         else:
             if compare == 'like':
                 return " " + operator + " " + col_name + " LIKE '%" + value + "%' "
             else:
-                return " " + operator + " " + col_name + " = " + value
+                return " " + operator + " " + col_name + " = '" + value + "'"
 
     def check_email_exist(self, email):
-        if self.conn.closed:
-            self.__init__()
+        self.conn_check()
 
         self.cursor.execute("SELECT email FROM user WHERE email = '" + email + "'")
         data = self.cursor.fetchall()
@@ -32,8 +36,7 @@ class AmmDB(object):
             return False
 
     def check_uname_exist(self, uname):
-        if self.conn.closed:
-            self.__init__()
+        self.conn_check()
 
         self.cursor.execute("SELECT uname FROM user WHERE uname = '" + uname + "'")
         data = self.cursor.fetchall()
@@ -43,9 +46,8 @@ class AmmDB(object):
         else:
             return False
 
-    def add_user(self, uname, email, passwd, phone, fn, ln, admin):
-        if self.conn.closed:
-            self.__init__()
+    def add_user(self, uname, email, passwd, fn, ln, admin=0, phone=''):
+        self.conn_check()
 
         if self.check_uname_exist(uname):
             return 'Username exists'
@@ -57,19 +59,20 @@ class AmmDB(object):
                             (uname, email, passwd, phone, fn, ln, admin))
         self.conn.commit()
 
-    def add_activity(self, name, skill, datetime, duration, numplayers, private, available, category, leader):
-        if self.conn.closed:
-            self.__init__()
+    def add_activity(self, name, skill, datetime, duration, numplayers, private, available, category, leader, latitude,
+                     longitude):
+        self.conn_check()
 
         self.cursor.execute("INSERT INTO activity " +
-                            "(name, skill, datetime, duration, numplayers, private, available, category, leader) " +
-                            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                            (name, skill, datetime, duration, numplayers, private, available, category, leader, ))
+                            "(name, skill, datetime, duration, numplayers, private, available, category, leader, "
+                            "latitude, longitude) " +
+                            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                            (name, skill, datetime, duration, numplayers, private, available, category, leader,
+                             latitude, longitude))
         self.conn.commit()
 
     def get_activity_type(self, activity_type_id='', name='', operator='AND'):
-        if self.conn.closed:
-            self.__init__()
+        self.conn_check()
 
         where_query = ''
 
@@ -92,8 +95,7 @@ class AmmDB(object):
 
     def get_activity(self, activity_id='', name='', skill='', duration='', numplayers='', available='', category='',
                      leader='', operator='AND'):
-        if self.conn.closed:
-            self.__init__()
+        self.conn_check()
 
         where_query = ""
 
@@ -120,9 +122,9 @@ class AmmDB(object):
 
         return data
 
-    def get_user(self, user_id='', uname='', email='', phone='', fn='', ln='', operator='AND'):
-        if self.conn.closed:
-            self.__init__()
+    def get_user(self, user_id='', uname='', email='', phone='', fn='', ln='', operator='AND', similar=False,
+                 exact=False):
+        self.conn_check()
 
         where_query = ""
 
@@ -137,10 +139,13 @@ class AmmDB(object):
 
         for param, value in params.items():
             if value != '':
-                if param == 'name':
+                if param == 'uname' and similar:
                     where_query += self.get_where_stmnt(where_query, param, value, operator, 'like')
                 else:
                     where_query += self.get_where_stmnt(where_query, param, str(value), operator)
+
+        if exact and where_query == '':
+            return ''
 
         self.cursor.execute("SELECT * FROM user " + where_query)
         data = self.cursor.fetchall()
@@ -148,8 +153,7 @@ class AmmDB(object):
         return data
 
     def get_user_activity(self, user_id='', activity_id='', private_app='', operator='AND'):
-        if self.conn.closed:
-            self.__init__()
+        self.conn_check()
 
         where_query = ''
 
