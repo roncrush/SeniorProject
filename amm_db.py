@@ -3,7 +3,7 @@ import MySQLdb as mysql
 
 class AmmDB(object):
     def __init__(self):
-        self.conn = mysql.connect(host='127.0.0.1', port=3306, user='root', passwd='admin', db='mydb')
+        self.conn = mysql.connect(host='127.0.0.1', port=3306, user='admin', passwd='admin', db='mydb')
         self.cursor = self.conn.cursor(mysql.cursors.DictCursor)
 
     @staticmethod
@@ -12,12 +12,12 @@ class AmmDB(object):
             if compare == 'like':
                 return "WHERE " + col_name + " LIKE '%" + value + "%' "
             else:
-                return "WHERE " + col_name + " = " + value
+                return "WHERE " + col_name + " = '" + value + "'"
         else:
             if compare == 'like':
                 return " " + operator + " " + col_name + " LIKE '%" + value + "%' "
             else:
-                return " " + operator + " " + col_name + " = " + value
+                return " " + operator + " " + col_name + " = '" + value + "'"
 
     def check_email_exist(self, email):
         if self.conn.closed:
@@ -43,7 +43,7 @@ class AmmDB(object):
         else:
             return False
 
-    def add_user(self, uname, email, passwd, phone, fn, ln, admin):
+    def add_user(self, uname, email, passwd, fn, ln, admin=0, phone=''):
         if self.conn.closed:
             self.__init__()
 
@@ -57,14 +57,17 @@ class AmmDB(object):
                             (uname, email, passwd, phone, fn, ln, admin))
         self.conn.commit()
 
-    def add_activity(self, name, skill, datetime, duration, numplayers, private, available, category, leader):
+    def add_activity(self, name, skill, datetime, duration, numplayers, private, available, category, leader, latitude,
+                     longitude):
         if self.conn.closed:
             self.__init__()
 
         self.cursor.execute("INSERT INTO activity " +
-                            "(name, skill, datetime, duration, numplayers, private, available, category, leader) " +
-                            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                            (name, skill, datetime, duration, numplayers, private, available, category, leader, ))
+                            "(name, skill, datetime, duration, numplayers, private, available, category, leader, "
+                            "latitude, longitude) " +
+                            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                            (name, skill, datetime, duration, numplayers, private, available, category, leader,
+                             latitude, longitude))
         self.conn.commit()
 
     def get_activity_type(self, activity_type_id='', name='', operator='AND'):
@@ -120,7 +123,7 @@ class AmmDB(object):
 
         return data
 
-    def get_user(self, user_id='', uname='', email='', phone='', fn='', ln='', operator='AND'):
+    def get_user(self, user_id='', uname='', email='', phone='', fn='', ln='', operator='AND', similar=False):
         if self.conn.closed:
             self.__init__()
 
@@ -137,10 +140,12 @@ class AmmDB(object):
 
         for param, value in params.items():
             if value != '':
-                if param == 'name':
+                if param == 'uname' and similar:
                     where_query += self.get_where_stmnt(where_query, param, value, operator, 'like')
                 else:
                     where_query += self.get_where_stmnt(where_query, param, str(value), operator)
+
+        print(where_query)
 
         self.cursor.execute("SELECT * FROM user " + where_query)
         data = self.cursor.fetchall()
