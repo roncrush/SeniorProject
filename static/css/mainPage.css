@@ -51,10 +51,15 @@ body {
   flex-direction: column;
 }
 
-  main {
+main {
     flex: 1 0 auto;
   }
+
 #navLogo{
   max-height: 100%;
   max-width: 100%;
+}
+
+.login-error {
+    color: crimson;
 }
