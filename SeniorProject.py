@@ -30,7 +30,7 @@ def main_page():
             else:
                 return render_template('MainPage.html', error='Username/Password is incorrect')
 
-    return render_template('MainPage.html')
+    return render_template('test.html')
 
 
 @app.route('/home')
