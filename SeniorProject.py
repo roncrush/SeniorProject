@@ -30,7 +30,7 @@ def main_page():
             else:
                 return render_template('MainPage.html', error='Username/Password is incorrect')
 
-    return render_template('test.html')
+    return render_template('MainPage.html')
 
 
 @app.route('/home')
@@ -47,6 +47,13 @@ def profile():
 def create_event():
     return render_template('create_event.html', key=utilities.get_maps_key())
 
+@app.route('/calendar')
+def calendar():
+    return render_template('SearchResultsPage.html')
+
+@app.route('/rosters')
+def rosters():
+    return render_template('RostersPage.html')
 
 if __name__ == '__main__':
     app.run()
