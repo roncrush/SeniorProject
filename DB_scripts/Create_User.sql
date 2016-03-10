@@ -1,15 +1,18 @@
-CREATE TABLE `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `uname` varchar(45) NOT NULL,
-  `email` varchar(45) DEFAULT NULL,
-  `passwd` varchar(45) NOT NULL,
-  `phone` varchar(12) DEFAULT NULL,
-  `fn` varchar(45) DEFAULT NULL,
-  `ln` varchar(45) DEFAULT NULL,
-  `admin` tinyint(1) DEFAULT NULL,
-  `suspension` datetime DEFAULT NULL,
+CREATE TABLE IF NOT EXISTS `mydb`.`user` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `uname` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NULL,
+  `passwd` BINARY(60) NOT NULL,
+  `phone` VARCHAR(12) NULL DEFAULT NULL,
+  `fn` VARCHAR(45) NULL DEFAULT NULL,
+  `ln` VARCHAR(45) NULL DEFAULT NULL,
+  `admin` TINYINT(1) NULL DEFAULT NULL,
+  `suspension` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`),
-  UNIQUE KEY `uname_UNIQUE` (`uname`),
-  UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='The Table for user info';
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  UNIQUE INDEX `uname_UNIQUE` (`uname` ASC),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC))
+ENGINE = InnoDB
+AUTO_INCREMENT = 6
+DEFAULT CHARACTER SET = utf8
+COMMENT = 'The Table for user info'
