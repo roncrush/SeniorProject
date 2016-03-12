@@ -3,7 +3,8 @@ import MySQLdb as mysql
 
 class AmmDB(object):
     def __init__(self):
-        self.conn = mysql.connect(host='localhost', port=3306, user='harrison', passwd='admin', db='activityDB')
+        self.conn = mysql.connect(host='ammdb.cwwnkw8gimhn.us-west-2.rds.amazonaws.com', port=3306, user='admin',
+                                  passwd='*********', db='mydb')
         self.cursor = self.conn.cursor(mysql.cursors.DictCursor)
 
     def conn_check(self):
@@ -122,39 +123,6 @@ class AmmDB(object):
 
         return data
 
-    def edit_user(self, user_id='', email='', fname='', lname='', passwd='', phone=''):
-
-        self.conn_check()
-
-        if passwd != '':
-            passwd = passwd.decode(encoding='UTF-8')
-
-        params = {
-            'email': email,
-            'fn': fname,
-            'ln': lname,
-            'passwd': passwd,
-            'phone': phone,
-        }
-
-
-
-
-        set_statement = []
-
-        for param, value in params.items():
-            if value != '':
-                set_statement.append(param + "=" + "\'"+value+"\'")
-
-        uid = "id=\'"+str(user_id)+"\'"
-
-        if len(set_statement) > 0:
-            self.cursor.execute('''UPDATE user SET {} WHERE {}'''.format(', '.join(set_statement), uid))
-
-            self.conn.commit()
-        else:
-            return None
-
     def get_user(self, user_id='', uname='', email='', phone='', fn='', ln='', operator='AND', similar=False,
                  exact=False):
         self.conn_check()
@@ -204,6 +172,3 @@ class AmmDB(object):
         data = self.cursor.fetchall()
 
         return data
-
-
-

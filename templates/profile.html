@@ -11,77 +11,64 @@
 <div class="row">
 {% include "partials/sidebar_partial.html" %}
 
-    <div class="profile">
-        <form class="col s12 profile-content" method="post" action="{{ url_for('profile') }}">
-          <div class="input-field col s12">
-              <h5 class="center grey-text">{{ user[0]['uname'] + "\'s profile" }}</h5>
-              <br>
-          </div>
-          <div class="row">
-              <div class="input-field col s5">
-                  <input placeholder="{{ user[0]['fn'] }}" name="fname" type="text" class="validate">
+    <form class="col s10 card-panel offset-l2" method="get">
+      <div>
+            <div class="input-field col s9">
+              <input disabled value="Neytiri_01" id="disabled" type="text" class="validate">
+              <label for="disabled">User Name</label>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s4">
+                  <input placeholder="Zoe" id="first_name" type="text" class="validate">
                   <label for="first_name">First Name</label>
-              </div>
-              <div class="center input-field col s5">
-                  <input placeholder="{{ user[0]['ln'] }}" name=lname type="text" class="validate">
-                  <label for="lname">Last Name</label>
-              </div>
-          </div>
+                </div>
+                <div class="input-field col s4">
+                  <input placeholder="Saldana" id="last_name" type="text" class="validate">
+                  <label for="last_name">Last Name</label>
+                </div>
+            </div>
+
+
           <div class="row">
-            <div class="input-field col s10">
-              <input name='password' type="password" class="validate">
+            <div class="input-field col s9">
+              <input id="password" type="password" class="validate">
               <label for="password">Password</label>
             </div>
           </div>
-          <div class="row">
-            <div class="input-field col s10">
-              <input name="c_password" type="password" class="validate">
+            <div class="row">
+            <div class="input-field col s9">
+              <input id="password" type="password" class="validate">
               <label for="password">Confirm Password</label>
             </div>
           </div>
           <div class="row">
-            <div class="input-field col s10">
-              <input placeholder="{{ user[0]['email'] }}" name="u_email" type="email" class="validate">
-              <label for="u_email">Email</label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s10">
-                <input placeholder="{{ user[0]['phone'] }}" name="phone" type="tel" class="validate">
-                <label for="phone">Phone Number</label>
-            </div>
-          </div>
-          <div class="row">
-                <p class="center"><input type="submit" value="Done" class="red white-text waves-effect btn-flat"></p>
-                  {% if response %}
-                    <p class = '{{ css_class }} center'>{{ response }}</p>
-                  {% endif %}
-          </div>
-        </form>
-    </div>
+            <div class="input-field col s9">
+              <input placeholder="princess_Neytiri@hometree.com" id="email" type="email" class="validate">
+              <label for="email">Email</label>
 
+                <p><input type="submit" value="Done"></p>
+
+            </div>
+          </div>
+
+      </div>
+
+    </form>
 </div>
 
 <script>
-
-
-
     function adjustStyle(width) {
         width = parseInt(width);
         if (width < 600) {
             $(".sidebar").css("position", "relative");
-            $(".input-field").css("margin-left", "0em");
-            $(".profile").css("margin-left", "1em")
-            $(".profile").css("margin-right", "1em")
-
-
-
+            $(".input-field").css("margin-left", "2em");
+            $(".card-panel").css("margin-left", "3em")
 
         } else {
             $(".sidebar").css("position", "fixed");
-
+            $(".input-field").css("margin-left", "15em");
         }
-
     }
     $(function () {
         adjustStyle($(this).width());

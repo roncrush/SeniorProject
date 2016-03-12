@@ -1,5 +1,3 @@
-
-
 {% extends "template.html" %}
 {% block header %}
 {{ super() }}
@@ -12,59 +10,29 @@
 {% include "partials/navbar_partial.html" %}
 <div class="row">
 {% include "partials/sidebar_partial.html" %}
-    <div class="s6 main-content" align="center">
+    <div class="s6" align="center">
         <!-- Teal page content  -->
               <br>
               <br>
               <br>
-        <p class="flow-text"><h1>Welcome {{ username }}!</h1></p>
-        <p class="flow-text">Join a current activity or start your own.</p>
               <br>
-
-
-            <button class="btn-floating" onclick='goToCalender()'>
-                 <p class="flow-text black-text waves-effect"> JOIN ACTIVITY</p>
-            </button>
-
-            <button class="btn-floating" onclick='goToCreateActivity()'>
-                 <p class="flow-text black-text waves-effect"> CREATE ACTIVITY</p>
-            </button>
-
-
-    </div>
-
-
-
+              <br><br><br>
+              <button class="btn-floating">
+                  <a href="search_results.html">JOIN ACTIVITY</a>
+              </button>
+              <button class="btn-floating">CREATE ACTIVITY</button>
+      </div>
 </div>
 
 <script>
-    function goToCalender(){
-        var url = window.location.hash;
-        url += '/calendar';
-        window.location.replace(url)
-    }
-
-    function goToCreateActivity(){
-        var url = window.location.hash;
-        url += '/create_event';
-        window.location.replace(url)
-    }
-
     function adjustStyle(width) {
         width = parseInt(width);
         if (width < 600) {
             $(".sidebar").css("position", "relative");
             $(".btn-floating").css("width", "95%");
             $(".btn-floating").css("border-radius", "5%");
-            $(".btn-floating").css("margin-left", "0");
-            $(".main-content").css("margin-left", "0");
-
-
         } else {
             $(".sidebar").css("position", "fixed");
-            $(".btn-floating").css("width", "20em");
-            $(".btn-floating").css("border-radius", "20%");
-            $(".btn-floating").css("margin-top", "2em");
         }
     }
     $(function () {
