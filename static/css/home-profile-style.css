@@ -1,31 +1,48 @@
 .input_form {
     margin-top: 5em;
-    margin-left: 25em;
-
+    float: left
 }
-.input-field .prefix.active {
-  color: #cc0a00;
-}
-
 .main-content {
-    margin-left: 18em;
-    align-content: center;
+    margin-left: 25%;
+}
+
+.profile {
+    margin-left: 20%;
+    margin-right: 20%;
+
+}
+
+.profile-content {
+    background-color: ivory;
+    border: inset black;
+    border-radius: 5%
+}
+
+.input-field label {
+    color: black;
+    left: 0.75rem
+   }
+.input-field{
+    position: relative;
+    float: right;
+    margin-left: 5px;
 }
 
 .btn-floating {
-  display: inline-block;
-  color: #fff;
-  position: relative;
-  overflow: hidden;
-  z-index: 5;
-  width: 20em;
-  height: 10em;
-  line-height: 50px;
-  background-color: #0006ee;
-  border-radius: 20%;
-  transition: .3s ease-out;
-  cursor: pointer;
-  vertical-align: middle;
+    display: inline-block;
+    position: relative;
+    margin-left: 2em;
+    overflow: hidden;
+    z-index: 5;
+    width: 20em;
+    height: 10em;
+    line-height: 50px;
+    background-color: ivory;
+    border-radius: 20%;
+    border-width: 5em;
+    transition: .4s ease-out;
+    cursor: pointer;
+    vertical-align: middle;
 }
 .btn-floating a{
   color: #FFFFFF;
@@ -41,40 +58,14 @@
 }
 
 .btn-floating:hover {
-  background-color: #040099;
-
+    background-color: mediumturquoise;
 }
-
-
 
 .btn-floating:before {
   border-radius: 0;
 }
 
 button.btn-floating {
-  border: none;
+  border: outset black;
 }
 
-.activity-name {
-    padding: .20em;
-    font-size: 150%;
-}
-
-.players {
-    color: #000b9d;
-    font-size: smaller;
-    text-align: left;
-}
-
-.public {
-    text-align: right;
-    color: #53ee00;
-    font-size: smaller;
-}
-
-.private {
-    z-index: 1;
-    text-align: right;
-    color: #ff0003;
-    font-size: smaller;
-}
