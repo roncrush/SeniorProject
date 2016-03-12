@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+
+    <!--Import CSS for sidebar and navbar-->
+    <link id="size-stylesheet" rel="stylesheet" href="../static/css/navbar-sidebar-style.css">
+    <link id="results-stylesheet" rel="stylesheet" href="../static/css/ResultsPage.css">
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+
+<body class="cyan darken-3">
+<div class="navbar-fixed">
+    <nav>
+        <div class="nav-wrapper z-depth-4 cyan darken-2">
+            <div class="row">
+                <div class="col l2"><a href="#" class="brand-logo">Logo</a></div>
+            </div>
+        </div>
+    </nav>
+</div>
+<div class="row">
+    <div class="sidebar col l2 m3 s12 cyan darken-2 z-depth-3">
+        <div class="sidebar-profile-image">
+            <img class="circle responsive-img hoverable z-depth-1" src="../static/images/no_pic.png">
+        </div>
+        <div>
+            <ul class="collection with-header">
+                <li class="collection-header center-align"><h4>Username</h4></li>
+                <a href="{{ url_for('home') }}" class="collection-item center-align">Home</a>
+                <a href="{{ url_for('profile') }}" class="collection-item center-align">View Profile</a>
+                <a href="{{ url_for('home') }}" class="collection-item center-align">View Rosters</a>
+                <a href="#!" class="collection-item center-align">View Calendar</a>
+                <a href="{{ url_for('main_page') }}" class="collection-item center-align">Logout</a>
+            </ul>
+        </div>
+    </div>
+    <div class="col l10 offset-l2" id="result">
+        <ul class="collapsible" data-collapsible="accordion">
+            <li>
+                <div class="collapsible-header" style="max-height: 9em;">
+                    <div class="row">
+                        <div class="col s4">
+                            <div class="row">
+                                <div class="col s12 cyan darken-3 z-depth-2" style="margin-top: .5em;text-align: center;">
+                                    <span class="flow-text">Name</span>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top: -1.5em;">
+                                <div class="col s3 offset-s1"><span>Category</span></div>
+                                <div class="col s3 offset-s4"><span>Skill Level</span></div>
+                            </div>
+                        </div>
+                        <div class="col s2">
+                            <ul style="list-style: none;">
+                                <li id="Location" style="margin-bottom: -.5em;">Location</li>
+                                <li id="Date" style="margin-bottom: -.5em;">Date</li>
+                                <li id="Time">Time</li>
+                            </ul>
+                        </div>
+                        <div class="col s2" style="margin-bottom: -1em;">
+                            <img src="../static/images/no_pic.png" class="responsive-img circle" style="margin-top: .5em; margin-bottom: -1em; max-height: 8em; ">
+                        </div>
+                        <div class="col s4">
+                            <div class="row">
+                                <span class="col offset-s9 s3">Private/Public</span>
+                            </div>
+                            <div class="row">
+                                <span class="col s6 cyan darken-3 z-depth-2">Filled Slots/Total Slots</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="collapsible-body white" style="text-align: center;">
+                    <div class="row">
+                        <div class="col s10">
+                            <p>Description goes here</p>
+                        </div>
+                        <div class="col s2" style="margin-top: 6em;">
+                            <a class="btn waves-effect waves-light cyan darken-3">Join!</a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    function adjustStyle(width) {
+        width = parseInt(width);
+        if (width < 600) {
+            $(".sidebar").css("position", "relative");
+        } else {
+            $(".sidebar").css("position", "fixed");
+        }
+    }
+
+    $(function () {
+        adjustStyle($(this).width());
+        $(window).resize(function () {
+            adjustStyle($(this).width());
+        });
+    });
+
+    $(document).ready(function(){
+        $('.collapsible').collapsible({
+        accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+        });
+    });
+</script>
+
+</body>
+</html>
