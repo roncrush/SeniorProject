@@ -9,12 +9,17 @@
 
 {% include "partials/navbar_partial.html" %}
 <div class="row">
-{% include "partials/sidebar_partial.html" %}
-{% include "partials/searchFilter_partial.html" %}
-</div>
-
-<div class="row">
-{% include "partials/searchFilter_partial.html" %}
+    {% include "partials/sidebar_partial.html" %}
+    <div class="col l10 offset-l2">
+        <div class="container">
+            <div class="row">
+                {% include "partials/searchFilter_partial.html" %}
+            </div>
+            <div class="row">
+                {% include "partials/searchFilter_partial.html" %}
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
