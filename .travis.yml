@@ -1,9 +1,12 @@
 language: python
 python:
   - "3.5"
-  
+addons:
+    code_climate:
+        repo_token: e51aa6e4c897d14a365eaedad9ff94003d567b6018c3e8ff3be2c16354c486b1
+        
 # install dependencies
 install: "pip install -r requirements.txt"
 
 # run tests
-script: unittest
+script: python Unittest/test_ammDB.py
