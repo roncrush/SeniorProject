@@ -1,10 +1,15 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, redirect, url_for
 from flask.ext.bcrypt import Bcrypt
 import utilities
 import amm_db
 
 app = Flask(__name__)
 app.debug = True
+
+# pushed random letters, numbers, symbols: can be changed
+# Used for session
+app.secret_key = 'F847Jsa8sa&320-1=-!@('
+
 bcrypt = Bcrypt(app)
 
 db = amm_db.AmmDB()
@@ -12,6 +17,7 @@ db = amm_db.AmmDB()
 
 @app.route('/', methods=['GET', 'POST'])
 def main_page():
+    session['userID'] = None
 
     if request.method == 'POST':
         if request.form.get('email', None) is not None:
@@ -20,11 +26,12 @@ def main_page():
         elif request.form.get('username-login', None) is not None:
             data = db.get_user(uname=request.form['username-login'], exact=True)
 
-            print(len(data))
-
             if len(data) > 0:
                 if bcrypt.check_password_hash(data[0]['passwd'], request.form['password-login']):
-                    main_page()
+                    user_id = data[0]['id']
+                    session['user_id'] = user_id
+                    return redirect(url_for('home'))
+
                 else:
                     return render_template('MainPage.html', error='Username/Password is incorrect')
             else:
@@ -35,25 +42,73 @@ def main_page():
 
 @app.route('/home')
 def home():
-    return render_template('home.html')
+    if session.get('user_id', None) is None:
+        return redirect(url_for('main_page'))
+    else:
+        user_info = db.get_user(session.get('user_id'))
+        return render_template('home.html', user=user_info)
 
 
-@app.route('/profile')
+@app.route('/profile', methods=['POST', 'GET'])
 def profile():
-    return render_template('profile.html')
+    if session.get('user_id', None) is None:
+        return redirect(url_for('main_page'))
+    else:
+        user_info = db.get_user(session.get('user_id'))
+        if request.method == 'POST':
+            response = 'Passwords do not match!'
+            if request.form['password'] != request.form['c_password']:
+                return render_template('profile.html', user=user_info, response=response, css_class='red-text')
+            else:
+                if request.form['password'] != '':
+                    db.edit_user(session.get('user_id'), email=request.form['u_email'],
+                             fname=request.form['fname'], lname=request.form['lname'],
+                             passwd=bcrypt.generate_password_hash(request.form['password']),
+                                 phone = request.form['phone'])
+                else:
+                    db.edit_user(session.get('user_id'), email=request.form['u_email'],
+                             fname=request.form['fname'], lname=request.form['lname'],
+                             passwd='', phone=request.form['phone'])
+
+                response = 'Updates made to profile!'
+                user_info = db.get_user(session.get('user_id'))
+
+                return render_template('profile.html', response=response, css_class='green-text', user=user_info)
+        else:
+            return render_template('profile.html', user=user_info)
 
 
-@app.route('/create_event')
+@app.route('/create_event', methods=['POST', 'GET'])
 def create_event():
-    return render_template('create_event.html', key=utilities.get_maps_key())
+    if session.get('user_id', None) is None:
+        return redirect(url_for('main_page'))
+    user_info = db.get_user(session.get('user_id'))
+    return render_template('create_event.html', user=user_info)
+
 
 @app.route('/calendar')
 def calendar():
-    return render_template('SearchResultsPage.html')
+    if session.get('user_id', None) is None:
+        return redirect(url_for('main_page'))
+    user_info = db.get_user(session.get('user_id'))
+    return render_template('SearchResultsPage.html', user=user_info)
+
 
 @app.route('/rosters')
 def rosters():
-    return render_template('RostersPage.html')
+    if session.get('user_id', None) is None:
+        return redirect(url_for('main_page'))
+    user_info = db.get_user(session.get('user_id'))
+    return render_template('RostersPage.html', user=user_info)
+
+
+@app.route('/logout')
+def logout():
+    if session.get('user_id', None) is None:
+        return redirect(url_for('main_page'))
+    session.clear()
+    return main_page()
+
 
 if __name__ == '__main__':
     app.run()
