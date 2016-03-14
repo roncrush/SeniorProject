@@ -5,9 +5,9 @@ import MySQLdb as mysql
 
 class TestAmmDB(TestCase):
     def test_conn_check(self):
-        host = 'ammdb.cwwnkw8gimhn.us-west-2.rds.amazonaws.com'
-        user = 'admin'
-        passwd = 'adminadmin'
+        host = ''
+        user = ''
+        passwd = ''
         self.conn = mysql.connect(host=host, port=3306, user=user, passwd=passwd, db='mydb')
         self.cursor = self.conn.cursor(mysql.cursors.DictCursor)
         self.failIf(self.conn.closed, self)
@@ -38,10 +38,58 @@ class TestAmmDB(TestCase):
         db = AmmDB()
         self.assertTrue(db.check_uname_exist("test"), True)
 
+    def test_get_user(self):
+        #first test output
+        #Positive:
+        #store observed get_user out
+        #store expected get_user out
+        #assertequal observed is expected
+        #Negative:
+        #store observed get_user out for bad params
+        #store expected get_user out for bad params
+        #assertequal observed is expected
+        self.fail()
+
     def test_add_user(self):
+        #Positive
+        #Add user
+        #get user
+        #store observed get_user out
+        #store expected get_user out
+        #assertequal observed is expected
+        #Negative
+        #Add user with bad info
+        #get user
+        #store observed get_user out
+        #store expected get_user out
+        #assertnotequal observed is expected
+        self.fail()
+
+    def test_get_activity(self):
+        #first test output
+        #Positive:
+        #store observed get_act out
+        #store expected get_act out
+        #assertequal observed is expected
+        #Negative:
+        #store observed get_act out for bad params
+        #store expected get_act out for bad params
+        #assertequal observed is expected
         self.fail()
 
     def test_add_activity(self):
+        #Positive
+        #Add user
+        #get user
+        #store observed get_act out
+        #store expected get_act out
+        #assertequal observed is expected
+        #Negative
+        #Add user with bad info
+        #get user
+        #store observed get_act out
+        #store expected get_act out
+        #assertnotequal observed is expected
         self.fail()
 
     def test_get_activity_type(self):
@@ -51,14 +99,33 @@ class TestAmmDB(TestCase):
         # self.assertEqual(observed, expected)
         self.fail()
 
-    def test_get_activity(self):
-        self.fail()
-
     def test_edit_user(self):
+        #Positive
+        #Edit user
+        #get user
+        #store observed get_user out
+        #store expected get_user out
+        #assertequal observed is expected
+        #Negative
+        #Add user with bad info
+        #get user
+        #store observed get_user out
+        #store expected get_user out
+        #assertnotequal observed is expected
         self.fail()
 
-    def test_get_user(self):
-        self.fail()
 
     def test_get_user_activity(self):
+        #Positive
+        #Edit usr_act
+        #get act
+        #store observed get_usract out
+        #store expected get_usract out
+        #assertequal observed is expected
+        #Negative
+        #Edit useract with bad info
+        #get useract
+        #store observed get_useract out
+        #store expected get_useract out
+        #assertnotequal observed is expected
         self.fail()
