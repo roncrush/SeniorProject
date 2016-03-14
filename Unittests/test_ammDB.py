@@ -1,9 +1,9 @@
-from unittest import TestCase
+import unittest
 from amm_db import AmmDB
 import MySQLdb as mysql
 
 
-class TestAmmDB(TestCase):
+class TestAmmDB(unittest.TestCase):
     def test_conn_check(self):
         host = 'ammdb.cwwnkw8gimhn.us-west-2.rds.amazonaws.com'
         user = 'admin'
@@ -62,3 +62,6 @@ class TestAmmDB(TestCase):
 
     def test_get_user_activity(self):
         self.fail()
+
+if __name__ == '__main__':
+    unittest.main()
