@@ -6,13 +6,14 @@ addons:
         repo_token: e51aa6e4c897d14a365eaedad9ff94003d567b6018c3e8ff3be2c16354c486b1
         
 before_install:
+  - pip install coverage
   - pip install codecov
 
 # install dependencies
 install: "pip install -r requirements.txt"
 
 # run tests
-script: python test_ammDB.py $db_pass
+script: coverage test_ammDB.py $db_pass --source .
 
 after_success:
   - codecov
