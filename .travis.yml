@@ -12,7 +12,7 @@ before_install:
 install: "pip install -r requirements.txt"
 
 # run tests
-script: python test_ammDB.py
+script: python test_ammDB.py $db_pass
 
 after_success:
   - codecov
