@@ -1,9 +1,15 @@
 import MySQLdb as mysql
+import sys
+
+password = ''
+for arg in sys.argv:
+    password = arg
 
 
 class AmmDB(object):
     def __init__(self):
-        self.conn = mysql.connect(host='localhost', port=3306, user='harrison', passwd='admin', db='activityDB')
+        self.conn = mysql.connect(host='ammdb.cwwnkw8gimhn.us-west-2.rds.amazonaws.com', port=3306, user='admin',
+                                  passwd=password, db='mydb')
         self.cursor = self.conn.cursor(mysql.cursors.DictCursor)
 
     def conn_check(self):

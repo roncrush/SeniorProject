@@ -1,16 +1,11 @@
 import unittest
 from amm_db import AmmDB
-import MySQLdb as mysql
 
 
 class TestAmmDB(unittest.TestCase):
     def test_conn_check(self):
-        host = 'ammdb.cwwnkw8gimhn.us-west-2.rds.amazonaws.com'
-        user = 'admin'
-        passwd = 'adminadmin'
-        self.conn = mysql.connect(host=host, port=3306, user=user, passwd=passwd, db='mydb')
-        self.cursor = self.conn.cursor(mysql.cursors.DictCursor)
-        self.failIf(self.conn.closed, self)
+        db = AmmDB()
+        self.failIf(db.conn.closed, self)
 
     def test_get_where_stmnt(self):
         db = AmmDB()
