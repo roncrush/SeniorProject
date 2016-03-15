@@ -3,18 +3,14 @@ from amm_db import AmmDB
 import sys
 
 
-password = ''
-for arg in sys.argv:
-    password = arg
-
-
 class TestAmmDB(unittest.TestCase):
+
     def test_conn_check(self):
-        db = AmmDB(password)
+        db = AmmDB(self.password)
         self.failIf(db.conn.closed, self)
 
     def test_get_where_stmnt(self):
-        db = AmmDB(password)
+        db = AmmDB(self.password)
         observed = db.get_where_stmnt("", "testCol", "testVal", "", 'like')
         expected = "WHERE testCol LIKE '%testVal%' "
         self.assertEqual(observed, expected)
@@ -32,11 +28,11 @@ class TestAmmDB(unittest.TestCase):
         self.assertEqual(observed, expected)
 
     def test_check_email_exist(self):
-        db = AmmDB(password)
+        db = AmmDB(self.password)
         self.assertTrue(db.check_email_exist("test@test.com"), True)
 
     def test_check_uname_exist(self):
-        db = AmmDB(password)
+        db = AmmDB(self.password)
         self.assertTrue(db.check_uname_exist("test"), True)
 
     def test_get_user(self):
@@ -132,4 +128,5 @@ class TestAmmDB(unittest.TestCase):
         self.fail()
 
 if __name__ == '__main__':
+    TestAmmDB.password = sys.argv.pop()
     unittest.main()
