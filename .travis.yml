@@ -13,7 +13,7 @@ before_install:
 install: "pip install -r requirements.txt"
 
 # run tests
-script: coverage test_ammDB.py $db_pass --source .
+script: coverage run test_ammDB.py $db_pass
 
 after_success:
   - codecov
