@@ -9,4 +9,4 @@ addons:
 install: "pip install -r requirements.txt"
 
 # run tests
-script: python Unittest/test_ammDB.py
+script: python Unittests/test_ammDB.py
