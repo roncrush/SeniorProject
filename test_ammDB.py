@@ -126,12 +126,12 @@ class TestAmmDB(unittest.TestCase):
         #we're not missing private_application, it was removed from UserActivity
         #a few weeks ago because it is not needed in UserActivity because private is
         #already stored in Activity, similarly to datetime from earlier
-        observed = db.get_user_activity(9, 25, 'AND')
-        expected = ()
+        observed = db.get_user_activity(9, 1, 'AND')
+        expected = ({'activityid': 1, 'userid' : 9},)
         self.assertEqual(observed, expected)
 
         # Negative
-        observed = db.get_user_activity(-1, 25, '', 'AND')
+        observed = db.get_user_activity(-1, 25, 'AND')
         expected = ()
         self.assertEqual(observed, expected)
 
