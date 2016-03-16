@@ -5,7 +5,7 @@ import sys
 from flask.ext import bcrypt
 
 class TestAmmDB(unittest.TestCase):
-    password='adminadmin'
+    password=''
     def test_conn_check(self):
         db = AmmDB(self.password)
         self.failIf(db.conn.closed, self)
@@ -139,6 +139,10 @@ class TestAmmDB(unittest.TestCase):
         observed = db.get_user_activity(-1, 25, 'AND')
         expected = ()
         self.assertEqual(observed, expected)
+
+    #TODO
+    def test_add_user_activity(self):
+        pass
 
 if __name__ == '__main__':
     unittest.main()
