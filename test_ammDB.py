@@ -4,7 +4,7 @@ import sys
 from flask.ext import bcrypt
 
 class TestAmmDB(unittest.TestCase):
-
+    password='adminadmin'
     def test_conn_check(self):
         db = AmmDB(self.password)
         self.failIf(db.conn.closed, self)
@@ -123,9 +123,12 @@ class TestAmmDB(unittest.TestCase):
         # Positive
         db = AmmDB(self.password)
         #looks like we are missing private_application in the DB
-        #observed = db.get_user_activity(9, 25, '', 'AND')
-        #expected = ()
-        #self.assertEqual(observed, expected)
+        #we're not missing private_application, it was removed from UserActivity
+        #a few weeks ago because it is not needed in UserActivity because private is
+        #already stored in Activity, similarly to datetime from earlier
+        observed = db.get_user_activity(9, 25, 'AND')
+        expected = ()
+        self.assertEqual(observed, expected)
 
         # Negative
         observed = db.get_user_activity(-1, 25, '', 'AND')
@@ -133,5 +136,4 @@ class TestAmmDB(unittest.TestCase):
         self.assertEqual(observed, expected)
 
 if __name__ == '__main__':
-    TestAmmDB.password = sys.argv.pop()
     unittest.main()
