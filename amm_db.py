@@ -123,7 +123,7 @@ class AmmDB(object):
 
         return data
 
-    def edit_user(self, user_id='', email='', fname='', lname='', passwd='', phone=''):
+    def edit_user(self, user_id='', email='', fname='', lname='', phone=''):
 
         self.conn_check()
 
@@ -134,7 +134,6 @@ class AmmDB(object):
             'email': email,
             'fn': fname,
             'ln': lname,
-            'passwd': passwd,
             'phone': phone,
         }
 
