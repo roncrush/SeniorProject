@@ -1,5 +1,6 @@
 import unittest
 from amm_db import AmmDB
+import random
 import sys
 from flask.ext import bcrypt
 
@@ -39,7 +40,7 @@ class TestAmmDB(unittest.TestCase):
         # Positive
         db = AmmDB(self.password)
         passwd = b'$2b$12$Z2OaKVc39OH6duIxaKFnkefKztlq7oPiYpzdNHfSwQDvBRfFjVCJ6'
-        observed = db.get_user(9, fn='test1', email='test@test.com', phone='1234567890', ln='test', uname='test', operator='AND', exact=False)[0]
+        observed = db.get_user(9, fn='test1', email='test@test.com', phone='1234567890', password=passwd, ln='test', uname='test', operator='AND', exact=False)[0]
         expected = ({'suspension': None, 'admin': 0, 'email': 'test@test.com', 'uname': 'test', 'passwd': passwd, 'id': 9, 'phone': '1234567890', 'ln': 'test', 'fn': 'test1'})
         self.assertEqual(observed, expected)
 
@@ -103,13 +104,17 @@ class TestAmmDB(unittest.TestCase):
         expected = ()
         self.assertEqual(observed, expected)
 
-    #def test_edit_user(self):
+    def test_edit_user(self):
         # Positive
-        # db = AmmDB()
-        # db.edit_user()
-        # observed = db.get_user()
-        # expected = ()
-        # self.assertEqual(observed, expected)
+        db = AmmDB(self.password)
+        passwd=b'$2b$12$Z2OaKVc39OH6duIxaKFnkefKztlq7oPiYpzdNHfSwQDvBRfFjVCJ6'
+        random.seed()
+        randomfn = random.randint(1, 100)
+        randomln = random.randint(1, 100)
+        db.edit_user(9, 'test@test.com', str(randomfn), str(randomln), passwd, '5555555555')
+        observed = db.get_user(9, 'test', 'something@example.com', '5555555555', str(randomfn), str(randomln))
+        expected = ()
+        self.assertEqual(observed, expected)
 
         # Negative
         # Add user with bad info
