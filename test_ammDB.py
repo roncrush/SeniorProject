@@ -3,6 +3,7 @@ from amm_db import AmmDB
 import datetime
 from decimal import *
 import sys
+import random
 from flask.ext import bcrypt
 
 class TestAmmDB(unittest.TestCase):
@@ -77,20 +78,21 @@ class TestAmmDB(unittest.TestCase):
         expected = ()
         self.assertEqual(observed, expected)
 
-    #def test_add_activity(self):
+    def test_add_activity(self):
         # Positive
         # Add user
-        # get user
-        # store observed get_act out
-        # store expected get_act out
-        # assertequal observed is expected
-        # Negative
-        # Add user with bad info
-        # get user
-        # store observed get_act out
-        # store expected get_act out
-        # assertnotequal observed is expected
-        #self.fail()
+        db = AmmDB(self.password)
+        dur = random.randint(0, 10000)
+        skil = random.randint(0,4)
+        nplayers = random.randint(0, 10000)
+        db.add_activity('test_activity', skil, datetime.datetime(2017, 4, 13, 18, 36, 49), dur, nplayers, 0, 1, 25, 9, Decimal('0.0000'), Decimal('0.0000'))
+        observed = db.get_activity(name='test_activity', skill=skil, duration=dur, numplayers=nplayers, category=25, available=1)
+        #We have no way of determining id from add activity so we cannot check this against expected
+        del (observed[0])['id']
+        print(observed)
+        expected = ({'available': 1, 'category': 25, 'datetime': datetime.datetime(2017, 4, 13, 18, 36, 49), 'duration': dur, 'latitude': Decimal('0.0000'), 'leader': 9, 'longitude': Decimal(0.0000), 'name': 'test_activity', 'numplayers': nplayers, 'private': 0, 'skill': skil},)
+        self.assertEqual(observed, expected)
+        # Negative: try to add an activity that already exists, cannot do since it will just assign a new id
 
     def test_get_activity_type(self):
         # positive
