@@ -1,6 +1,7 @@
 import unittest
 from amm_db import AmmDB
-import random
+import datetime
+from decimal import *
 import sys
 from flask.ext import bcrypt
 
@@ -67,9 +68,10 @@ class TestAmmDB(unittest.TestCase):
     def test_get_activity(self):
         # Positive
         db = AmmDB(self.password)
-        # observed = db.get_activity(1, 'testName', 4, 1, 3, 1, 25, 9, 'AND')
-        # expected = ({'id': 1, 'name': 'testName', 'numplayers': 3, 'available': 1, 'skill': 4, 'category': 25, 'longitude': Decimal('0.0000'), 'datetime': datetime.datetime(2017, 4, 13, 18, 36, 49), 'private': 0, 'latitude': Decimal('0.0000'), 'leader': 9, 'duration': 1})
-        # self.assertEqual(observed, expected)
+        observed = db.get_activity(1, 'testName', 4, 1, 3, 1, 25, 9, 'AND')
+        print(observed)
+        expected = ({'id': 1, 'name': 'testName', 'numplayers': 3, 'available': 1, 'skill': 4, 'category': 25, 'longitude': Decimal('0.0000'), 'datetime': datetime.datetime(2017, 4, 13, 18, 36, 49), 'private': 0, 'latitude': Decimal('0.0000'), 'leader': 9, 'duration': 1},)
+        self.assertEqual(observed, expected)
 
         # Negative
         observed = db.get_activity(0, 'badName', 4, 1, 3, 1, 25, 9, 'AND')
