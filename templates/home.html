@@ -22,12 +22,12 @@
               <br>
 
 
-            <button class="btn-floating" onclick='goToCalender()'>
-                 <p class="flow-text black-text waves-effect"> JOIN ACTIVITY</p>
+            <button class="btn-floating" onclick='goToCalender()' onmouseover="changeText()" onmouseout="changeBack()">
+                 <p class="flow-text button_text waves-effect"> JOIN ACTIVITY</p>
             </button>
 
-            <button class="btn-floating" onclick='goToCreateActivity()'>
-                 <p class="flow-text black-text waves-effect"> CREATE ACTIVITY</p>
+            <button class="btn-floating" onclick='goToCreateActivity()' onmouseover="changeText()" onmouseout="changeBack()">
+                 <p class="flow-text button_text waves-effect"> CREATE ACTIVITY</p>
             </button>
 
 
@@ -38,15 +38,22 @@
 </div>
 
 <script>
+    function changeBack(){
+        $(".button_text").css("color", "black")
+    }
+    function changeText(){
+        $(".button_text").css("color", "white")
+    }
+
     function goToCalender(){
         var url = window.location.hash;
-        url += '/calendar';
+        url += '{{ url_for('search') }}';
         window.location.replace(url)
     }
 
     function goToCreateActivity(){
         var url = window.location.hash;
-        url += '/create_event';
+        url += '{{ url_for('create_event') }}';
         window.location.replace(url)
     }
 

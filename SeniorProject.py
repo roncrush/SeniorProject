@@ -5,14 +5,10 @@ import amm_db
 
 app = Flask(__name__)
 app.debug = True
-
-# pushed random letters, numbers, symbols: can be changed
-# Used for session
-app.secret_key = 'F847Jsa8sa&320-1=-!@('
-
 bcrypt = Bcrypt(app)
+app.secret_key = 'test'
 
-db = amm_db.AmmDB()
+db = amm_db.AmmDB('adminadmin')
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -83,11 +79,32 @@ def create_event():
     if session.get('user_id', None) is None:
         return redirect(url_for('main_page'))
     user_info = db.get_user(session.get('user_id'))
-    return render_template('create_event.html', user=user_info)
+    categories = db.get_activity_type()
+
+    if request.method == 'POST':
+        activity_name = request.form['activity-name']
+        category = request.form['category']
+        private = request.form['private']
+        date = request.form['date']
+        time = request.form['time']
+        duration = request.form['duration']
+        latitude = request.form['lat']
+        longitude = request.form['lng']
+        num_of_players = request.form['num-of-players']
+        skill = request.form['skill-level']
+        datetime = utilities.combine_datetime(date, time)
+
+        db.add_activity(name=activity_name, category=category, datetime=datetime, duration=duration, latitude=latitude,
+                        longitude=longitude, numplayers=num_of_players, skill=skill, private=private, leader=session.get
+                        ('user_id'), available=1)
+
+        redirect(url_for('home'))
+
+    return render_template('create_event.html', key=utilities.get_maps_key(), user=user_info, categories=categories)
 
 
-@app.route('/calendar')
-def calendar():
+@app.route('/Search')
+def search():
     if session.get('user_id', None) is None:
         return redirect(url_for('main_page'))
     user_info = db.get_user(session.get('user_id'))
@@ -107,8 +124,7 @@ def logout():
     if session.get('user_id', None) is None:
         return redirect(url_for('main_page'))
     session.clear()
-    return main_page()
-
+    return redirect(url_for('main_page'))
 
 if __name__ == '__main__':
     app.run()

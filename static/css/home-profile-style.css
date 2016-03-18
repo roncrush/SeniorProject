@@ -1,31 +1,33 @@
 .input_form {
     margin-top: 5em;
-    float: left
 }
 .main-content {
     margin-left: 25%;
+
 }
 
 .profile {
     margin-left: 20%;
     margin-right: 20%;
-
+    background-color: ivory;
 }
 
 .profile-content {
     background-color: ivory;
     border: inset black;
-    border-radius: 5%
+    border-radius: 5%;
+
 }
 
 .input-field label {
     color: black;
-    left: 0.75rem
+    left: 0.75rem;
+    text-align: center;
    }
 .input-field{
     position: relative;
-    float: right;
-    margin-left: 5px;
+    margin-left: 10em;
+    text-align: center;
 }
 
 .btn-floating {
@@ -58,7 +60,7 @@
 }
 
 .btn-floating:hover {
-    background-color: mediumturquoise;
+    background-color: indigo;
 }
 
 .btn-floating:before {
@@ -69,3 +71,7 @@ button.btn-floating {
   border: outset black;
 }
 
+.button_text {
+    color: black;
+
+}

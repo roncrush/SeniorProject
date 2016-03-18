@@ -14,3 +14,7 @@
 #pac-input::-moz-placeholder {
     color: black;
 }
+
+.public-private {
+    margin-bottom: 2em;
+}
