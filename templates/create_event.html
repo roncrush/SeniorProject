@@ -1,9 +1,10 @@
 {% extends "template.html" %}
 {% block header %}
-{{ super() }}
+    {{ super() }}
 {% endblock header %}
 {% block content %}
     <link rel="stylesheet" href="../static/css/create_event-style.css">
+    <link rel="stylesheet" href="../static/css/materialize.clockpicker.css">
 
     {% include "partials/navbar_partial.html" %}
 
@@ -17,26 +18,46 @@
             </div>
 
             <div class="row">
-                <form class="col s12">
+                <form class="col s12" method="post">
                     <div class="row">
-                        <div class="input-field col s12 m8 white-text">
-                            <input id="activity_input" type="text" class="validate">
+                        <div class="input-field col s12 m5 white-text">
+                            <input id="activity_input" type="text" name='activity-name' class="validate">
                             <label for="activity_input">Activity Name</label>
                         </div>
                         <div class="input-field col s12 m4 white-text">
-                            <select>
+                            <select name="category">
                                 {% for category in categories %}
                                     <option value="{{ category['id'] }}">{{ category['name'] }}</option>
                                 {% endfor %}
                             </select>
                             <label>Category</label>
                         </div>
+                        <div class="input-field col s12 push-s4 center m3 public-private">
+                            <div class="switch">
+                                <label>
+                                    Public
+                                    <input class="private-switch" type="checkbox" onclick="privateSwitchOnChange(this)">
+                                    <span class="lever"></span>
+                                    Private
+                                </label>
+                            </div>
+                            <input class="private-switch-value" type='text' value='0' name='private' hidden>
+                        </div>
                     </div>
 
                     <div class="row">
-                        <div class="input-field col s5 m3 white-text">
-                            <input id="time_input" type="text" class="validate">
+                        <div class="input-field col s5 m5 white-text">
+                            <input id="time_input" name="date" type="date" class="datepicker">
+                            <label for="time_input">When</label>
+                        </div>
+                        <div class="input-field col s4 m3 white-text">
+                            <input id="time_input" name="time" type="text" class="timepicker">
                             <label for="time_input">Time</label>
+                        </div>
+                        <div class="input-field col s3 m3 white-text">
+                            <input id="time_input" name="duration" type="number" class="validate" min="0" type="number"
+                                   oninput="validity.valid || (value = '')">
+                            <label for="time_input">Duration (in minutes)</label>
                         </div>
                     </div>
 
@@ -49,13 +70,18 @@
 
                     <div class="row white-text">
                         <div class="col s5 m4 input-field">
-                            <input id="num-of-players" min="0" type="number" oninput="validity.valid || (value = '')" class="validate">
+                            <input id="num-of-players" name="num-of-players" min="0" type="number"
+                                   oninput="validity.valid || (value = '')" class="validate">
                             <label for="num-of-players">Number of Players</label>
                         </div>
 
                         <div class="col s7 m4 push-m4 input-field">
-                            <select id="skill-level">
-                                <option value="" disabled selected>Choose your option</option>
+                            <select id="skill-level" name="skill-level">
+                                <option value="0" selected>Any</option>
+                                <option value="1" selected>Beginner</option>
+                                <option value="2" selected>Intermediate</option>
+                                <option value="3" selected>Expert</option>
+                                <option value="4" selected>Master</option>
                             </select>
                             <label for="skill-level">Skill Level</label>
                         </div>
@@ -73,10 +99,32 @@
         </div>
     </div>
 
+    <script src="../static/js/materialize.clockpicker.js"></script>
     <script>
         $(document).ready(function () {
             $('select').material_select();
+            $('private-switch').checked = false;
         });
+
+        $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15 // Creates a dropdown of 15 years to control year
+        });
+
+        $('.timepicker').pickatime({
+            twelvehour: true,
+            donetext: 'Done',
+            autoclose: true
+        });
+
+        function privateSwitchOnChange(swtch){
+            if(swtch.checked) {
+                $('.private-switch-value').val("1")
+            }
+            else {
+                $('.private-switch-value').val("0")
+            }
+        }
 
         function initAutocomplete() {
             var map = new google.maps.Map(document.getElementById('map'), {
