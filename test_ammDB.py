@@ -50,21 +50,20 @@ class TestAmmDB(unittest.TestCase):
         expected = ()
         self.assertEqual(observed, expected)
 
-    #def test_add_user(self):
+    def test_add_user(self):
         # Positive
-        #db = AmmDB(self.password)
-        #db.add_user(fn='test1', email='test@test.com', uname='test', ln='test', passwd=bcrypt.Bcrypt().generate_password_hash('test'), admin=0, phone='1234567890')
-        #passwd = b'$2b$12$Z2OaKVc39OH6duIxaKFnkefKztlq7oPiYpzdNHfSwQDvBRfFjVCJ6'
-        #observed = db.get_user(9, 'test', 'test@test.com', '1234567890', 'test', 'test', 'AND', False)
-        #expected = ({'suspension': None, 'admin': 0, 'email': 'test@test.com', 'uname': 'test', 'passwd': passwd, 'id': 9, 'phone': '1234567890', 'ln': 'test', 'fn': 'test'})
-        #self.assertEqual(observed, expected)
+        db = AmmDB(self.password)
+        usrname = str(random.randint(1000, 9999))
+        mail = str(random.randint(1000, 9999)) + '@example.com'
+        passwd = 'asdf'
+        db.add_user(fn='test1', email=mail, uname=usrname, ln='test', passwd=passwd, admin=0, phone='5555555555')
+        observed = db.check_uname_exist(usrname)
+        self.assertTrue(observed)
 
-        # Negative
-        # Add user with bad info
-        # get user
-        # store observed get_user out
-        # store expected get_user out
-        # assertnotequal observed is expected
+        # Negative, add duplicate username, should not add
+        observed = db.add_user(fn='test1', email='something@example.com', uname=usrname, ln='test', passwd=passwd, admin=0, phone='5555555555')
+        expected = 'Username exists'
+        self.assertTrue(observed, expected)
 
     def test_get_activity(self):
         # Positive
@@ -89,7 +88,6 @@ class TestAmmDB(unittest.TestCase):
         observed = db.get_activity(name='test_activity', skill=skil, duration=dur, numplayers=nplayers, category=25, available=1)
         #We have no way of determining id from add activity so we cannot check this against expected
         del (observed[0])['id']
-        print(observed)
         expected = ({'available': 1, 'category': 25, 'datetime': datetime.datetime(2017, 4, 13, 18, 36, 49), 'duration': dur, 'latitude': Decimal('0.0000'), 'leader': 9, 'longitude': Decimal(0.0000), 'name': 'test_activity', 'numplayers': nplayers, 'private': 0, 'skill': skil},)
         self.assertEqual(observed, expected)
         # Negative: try to add an activity that already exists, cannot do since it will just assign a new id
