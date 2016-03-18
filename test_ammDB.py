@@ -8,7 +8,7 @@ from flask.ext import bcrypt
 class TestAmmDB(unittest.TestCase):
     def test_conn_check(self):
         db = AmmDB(self.password)
-        self.failIf(db.conn.closed, self)
+        self.assertFalse(db.conn.closed, self)
 
     def test_get_where_stmnt(self):
         db = AmmDB(self.password)
@@ -69,7 +69,6 @@ class TestAmmDB(unittest.TestCase):
         # Positive
         db = AmmDB(self.password)
         observed = db.get_activity(1, 'testName', 4, 1, 3, 1, 25, 9, 'AND')
-        print(observed)
         expected = ({'id': 1, 'name': 'testName', 'numplayers': 3, 'available': 1, 'skill': 4, 'category': 25, 'longitude': Decimal('0.0000'), 'datetime': datetime.datetime(2017, 4, 13, 18, 36, 49), 'private': 0, 'latitude': Decimal('0.0000'), 'leader': 9, 'duration': 1},)
         self.assertEqual(observed, expected)
 
@@ -117,13 +116,11 @@ class TestAmmDB(unittest.TestCase):
         expected = ({'admin': 0,'email': 'test@test.com','fn': 'test','id': 9,'ln': 'test','passwd': b'$2b$12$Z2OaKVc39OH6duIxaKFnkefKztlq7oPiYpzdNHfSwQDvBRfFjVCJ6','phone': '5555555555','suspension': None,'uname': 'test'},)
         self.assertEqual(observed, expected)
 
-        # Negative
-        # Add user with bad info
-        # get user
-        # store observed get_user out
-        # store expected get_user out
-        # assertnotequal observed is expected
-        #self.fail()
+        # Negative, trying to edit a user that does not exist
+        db.edit_user(0, 'test@test.com', 'test', 'test', passwd, '5555555555')
+        observed = db.get_user(0, 'test', 'test@test.com', '5555555555', 'test', 'test')
+        expected = ()
+        self.assertEqual(observed, expected)
 
     def test_get_user_activity(self):
         # Positive
@@ -141,7 +138,7 @@ class TestAmmDB(unittest.TestCase):
         expected = ()
         self.assertEqual(observed, expected)
 
-    #TODO
+    #TODO, needs add_user_activity in ammdb
     def test_add_user_activity(self):
         pass
 
