@@ -1,13 +1,15 @@
 import unittest
 from amm_db import AmmDB
-import random
+import datetime
+from decimal import *
 import sys
+import random
 from flask.ext import bcrypt
 
 class TestAmmDB(unittest.TestCase):
     def test_conn_check(self):
         db = AmmDB(self.password)
-        self.failIf(db.conn.closed, self)
+        self.assertFalse(db.conn.closed, self)
 
     def test_get_where_stmnt(self):
         db = AmmDB(self.password)
@@ -67,29 +69,30 @@ class TestAmmDB(unittest.TestCase):
     def test_get_activity(self):
         # Positive
         db = AmmDB(self.password)
-        # observed = db.get_activity(1, 'testName', 4, 1, 3, 1, 25, 9, 'AND')
-        # expected = ({'id': 1, 'name': 'testName', 'numplayers': 3, 'available': 1, 'skill': 4, 'category': 25, 'longitude': Decimal('0.0000'), 'datetime': datetime.datetime(2017, 4, 13, 18, 36, 49), 'private': 0, 'latitude': Decimal('0.0000'), 'leader': 9, 'duration': 1})
-        # self.assertEqual(observed, expected)
+        observed = db.get_activity(1, 'testName', 4, 1, 3, 1, 25, 9, 'AND')
+        expected = ({'id': 1, 'name': 'testName', 'numplayers': 3, 'available': 1, 'skill': 4, 'category': 25, 'longitude': Decimal('0.0000'), 'datetime': datetime.datetime(2017, 4, 13, 18, 36, 49), 'private': 0, 'latitude': Decimal('0.0000'), 'leader': 9, 'duration': 1},)
+        self.assertEqual(observed, expected)
 
         # Negative
         observed = db.get_activity(0, 'badName', 4, 1, 3, 1, 25, 9, 'AND')
         expected = ()
         self.assertEqual(observed, expected)
 
-    #def test_add_activity(self):
+    def test_add_activity(self):
         # Positive
         # Add user
-        # get user
-        # store observed get_act out
-        # store expected get_act out
-        # assertequal observed is expected
-        # Negative
-        # Add user with bad info
-        # get user
-        # store observed get_act out
-        # store expected get_act out
-        # assertnotequal observed is expected
-        #self.fail()
+        db = AmmDB(self.password)
+        dur = random.randint(0, 10000)
+        skil = random.randint(0,4)
+        nplayers = random.randint(0, 10000)
+        db.add_activity('test_activity', skil, datetime.datetime(2017, 4, 13, 18, 36, 49), dur, nplayers, 0, 1, 25, 9, Decimal('0.0000'), Decimal('0.0000'))
+        observed = db.get_activity(name='test_activity', skill=skil, duration=dur, numplayers=nplayers, category=25, available=1)
+        #We have no way of determining id from add activity so we cannot check this against expected
+        del (observed[0])['id']
+        print(observed)
+        expected = ({'available': 1, 'category': 25, 'datetime': datetime.datetime(2017, 4, 13, 18, 36, 49), 'duration': dur, 'latitude': Decimal('0.0000'), 'leader': 9, 'longitude': Decimal(0.0000), 'name': 'test_activity', 'numplayers': nplayers, 'private': 0, 'skill': skil},)
+        self.assertEqual(observed, expected)
+        # Negative: try to add an activity that already exists, cannot do since it will just assign a new id
 
     def test_get_activity_type(self):
         # positive
@@ -115,13 +118,11 @@ class TestAmmDB(unittest.TestCase):
         expected = ({'admin': 0,'email': 'test@test.com','fn': 'test','id': 9,'ln': 'test','passwd': b'$2b$12$Z2OaKVc39OH6duIxaKFnkefKztlq7oPiYpzdNHfSwQDvBRfFjVCJ6','phone': '5555555555','suspension': None,'uname': 'test'},)
         self.assertEqual(observed, expected)
 
-        # Negative
-        # Add user with bad info
-        # get user
-        # store observed get_user out
-        # store expected get_user out
-        # assertnotequal observed is expected
-        #self.fail()
+        # Negative, trying to edit a user that does not exist
+        db.edit_user(0, 'test@test.com', 'test', 'test', passwd, '5555555555')
+        observed = db.get_user(0, 'test', 'test@test.com', '5555555555', 'test', 'test')
+        expected = ()
+        self.assertEqual(observed, expected)
 
     def test_get_user_activity(self):
         # Positive
@@ -139,7 +140,7 @@ class TestAmmDB(unittest.TestCase):
         expected = ()
         self.assertEqual(observed, expected)
 
-    #TODO
+    #TODO, needs add_user_activity in ammdb
     def test_add_user_activity(self):
         pass
 
