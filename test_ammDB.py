@@ -1,10 +1,10 @@
 import unittest
 from amm_db import AmmDB
+import random
 import sys
 from flask.ext import bcrypt
 
 class TestAmmDB(unittest.TestCase):
-
     def test_conn_check(self):
         db = AmmDB(self.password)
         self.failIf(db.conn.closed, self)
@@ -39,8 +39,8 @@ class TestAmmDB(unittest.TestCase):
         # Positive
         db = AmmDB(self.password)
         passwd = b'$2b$12$Z2OaKVc39OH6duIxaKFnkefKztlq7oPiYpzdNHfSwQDvBRfFjVCJ6'
-        observed = db.get_user(9, fn='test1', email='test@test.com', phone='1234567890', ln='test', uname='test', operator='AND', exact=False)[0]
-        expected = ({'suspension': None, 'admin': 0, 'email': 'test@test.com', 'uname': 'test', 'passwd': passwd, 'id': 9, 'phone': '1234567890', 'ln': 'test', 'fn': 'test1'})
+        observed = db.get_user(9, fn='test', email='test@test.com', phone='5555555555', ln='test', uname='test', operator='AND', exact=False)
+        expected = ({'suspension': None, 'admin': 0, 'uname': 'test', 'passwd': passwd, 'email': 'test@test.com', 'id': 9, 'phone': '5555555555', 'fn': 'test', 'ln': 'test'},)
         self.assertEqual(observed, expected)
 
         # Negative
@@ -103,13 +103,17 @@ class TestAmmDB(unittest.TestCase):
         expected = ()
         self.assertEqual(observed, expected)
 
-    #def test_edit_user(self):
+    def test_edit_user(self):
         # Positive
-        # db = AmmDB()
-        # db.edit_user()
-        # observed = db.get_user()
-        # expected = ()
-        # self.assertEqual(observed, expected)
+        db = AmmDB(self.password)
+        passwd=b'$2b$12$Z2OaKVc39OH6duIxaKFnkefKztlq7oPiYpzdNHfSwQDvBRfFjVCJ6'
+        #random.seed()
+        #randomfn = random.randint(1, 100)
+        #randomln = random.randint(1, 100)
+        db.edit_user(9, 'test@test.com', 'test', 'test', passwd, '5555555555')
+        observed = db.get_user(9, 'test', 'test@test.com', '5555555555', 'test', 'test')
+        expected = ({'admin': 0,'email': 'test@test.com','fn': 'test','id': 9,'ln': 'test','passwd': b'$2b$12$Z2OaKVc39OH6duIxaKFnkefKztlq7oPiYpzdNHfSwQDvBRfFjVCJ6','phone': '5555555555','suspension': None,'uname': 'test'},)
+        self.assertEqual(observed, expected)
 
         # Negative
         # Add user with bad info
@@ -123,14 +127,21 @@ class TestAmmDB(unittest.TestCase):
         # Positive
         db = AmmDB(self.password)
         #looks like we are missing private_application in the DB
-        #observed = db.get_user_activity(9, 25, '', 'AND')
-        #expected = ()
-        #self.assertEqual(observed, expected)
+        #we're not missing private_application, it was removed from UserActivity
+        #a few weeks ago because it is not needed in UserActivity because private is
+        #already stored in Activity, similarly to datetime from earlier
+        observed = db.get_user_activity(9, 1, 'AND')
+        expected = ({'activityid': 1, 'userid' : 9},)
+        self.assertEqual(observed, expected)
 
         # Negative
-        observed = db.get_user_activity(-1, 25, '', 'AND')
+        observed = db.get_user_activity(-1, 25, 'AND')
         expected = ()
         self.assertEqual(observed, expected)
+
+    #TODO
+    def test_add_user_activity(self):
+        pass
 
 if __name__ == '__main__':
     TestAmmDB.password = sys.argv.pop()

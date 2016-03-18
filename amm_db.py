@@ -186,7 +186,7 @@ class AmmDB(object):
 
         return data
 
-    def get_user_activity(self, user_id='', activity_id='', private_app='', operator='AND'):
+    def get_user_activity(self, user_id='', activity_id='', operator='AND'):
         self.conn_check()
 
         where_query = ''
@@ -194,7 +194,6 @@ class AmmDB(object):
         params = {
             'userid': user_id,
             'activityid': activity_id,
-            'private_application': private_app,
         }
 
         for param, value in params.items():
