@@ -47,13 +47,13 @@
 
     function goToCalender(){
         var url = window.location.hash;
-        url += '/calendar';
+        url += '{{ url_for('search') }}';
         window.location.replace(url)
     }
 
     function goToCreateActivity(){
         var url = window.location.hash;
-        url += '/create_event';
+        url += '{{ url_for('create_event') }}';
         window.location.replace(url)
     }
 
