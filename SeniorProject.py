@@ -8,7 +8,7 @@ app.debug = True
 bcrypt = Bcrypt(app)
 app.secret_key = 'test'
 
-db = amm_db.AmmDB('')
+db = amm_db.AmmDB('adminadmin')
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -103,8 +103,8 @@ def create_event():
     return render_template('create_event.html', key=utilities.get_maps_key(), user=user_info, categories=categories)
 
 
-@app.route('/calendar')
-def calendar():
+@app.route('/Search')
+def search():
     if session.get('user_id', None) is None:
         return redirect(url_for('main_page'))
     user_info = db.get_user(session.get('user_id'))
