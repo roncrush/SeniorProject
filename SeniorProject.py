@@ -8,7 +8,7 @@ app.debug = True
 bcrypt = Bcrypt(app)
 app.secret_key = 'test'
 
-db = amm_db.AmmDB('adminadmin')
+db = amm_db.AmmDB()
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -103,12 +103,13 @@ def create_event():
     return render_template('create_event.html', key=utilities.get_maps_key(), user=user_info, categories=categories)
 
 
-@app.route('/Search')
+@app.route('/search', methods=['POST','GET'])
 def search():
     if session.get('user_id', None) is None:
         return redirect(url_for('main_page'))
     user_info = db.get_user(session.get('user_id'))
-    return render_template('SearchResultsPage.html', user=user_info)
+
+    return render_template('SearchResultsPage.html', user=user_info, results=results)
 
 
 @app.route('/rosters')
@@ -125,6 +126,17 @@ def logout():
         return redirect(url_for('main_page'))
     session.clear()
     return redirect(url_for('main_page'))
+
+@app.route('/results')
+def results():
+    activity_name = request.form['activity-name']
+    category = request.form['category']
+    skill = request.form['skill']
+
+    results = db.get_activity(name=activity_name, category=category, skill=skill)
+
+    return render_template('SearchResultsPage.html',results=results)
+
 
 if __name__ == '__main__':
     app.run()

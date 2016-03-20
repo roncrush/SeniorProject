@@ -2,9 +2,8 @@ import MySQLdb as mysql
 
 
 class AmmDB(object):
-    def __init__(self, password):
-        self.conn = mysql.connect(host='ammdb.cwwnkw8gimhn.us-west-2.rds.amazonaws.com', port=3306, user='admin',
-                                  passwd=password, db='mydb')
+    def __init__(self):
+        self.conn = mysql.connect(host='ammdb.cwwnkw8gimhn.us-west-2.rds.amazonaws.com', port=3306, user='admin', passwd='adminadmin', db='mydb')
         self.cursor = self.conn.cursor(mysql.cursors.DictCursor)
 
     def conn_check(self):
@@ -186,7 +185,7 @@ class AmmDB(object):
 
         return data
 
-    def get_user_activity(self, user_id='', activity_id='', operator='AND'):
+    def get_user_activity(self, user_id='', activity_id='', private_app='', operator='AND'):
         self.conn_check()
 
         where_query = ''
@@ -194,6 +193,7 @@ class AmmDB(object):
         params = {
             'userid': user_id,
             'activityid': activity_id,
+            'private_application': private_app,
         }
 
         for param, value in params.items():
