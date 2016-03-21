@@ -6,24 +6,24 @@
                         <div class="col s4">
                             <div class="row">
                                 <div class="col s12 cyan darken-3 z-depth-2" style="margin-top: .5em;text-align: center;">
-                                    <span class="flow-text">{{ results.name }}</span>
+                                    <span class="flow-text">{{ record['name'] }}</span>
                                 </div>
                             </div>
                             <div class="row" style="margin-top: -1.5em;">
-                                <div class="col s3 offset-s1"><span>{{ results.category }}</span></div>
-                                <div class="col s3 offset-s4"><span>{{ results.skill }}</span></div>
+                                <div class="col s3 offset-s1"><span>{{ record['category'] }}</span></div>
+                                <div class="col s3 offset-s4"><span>{{ record['skill'] }}</span></div>
                             </div>
                         </div>
                         <div class="col s2">
                             <ul style="list-style: none;">
-                                <li id="Location" style="margin-bottom: -.5em;">{{ results.latitude }}</li>
-                                <li id="Date" style="margin-bottom: -.5em;">{{ results.datetime }}</li>
+                                <li id="Location" style="margin-bottom: -.5em;">{{ record.latitude }}</li>
+                                <li id="Date" style="margin-bottom: -.5em;">{{ record['datetime'] }}</li>
                                 <li id="Time">Time</li>
                             </ul>
                         </div>
                         <div class="col s4 offset-s2">
                             <div class="row">
-                                <span class="col offset-s9 s3">{{ results.private }}</span>
+                                <span class="col offset-s9 s3">{{ record.private }}</span>
                             </div>
                             <div class="row">
                                 <span class="col s6 cyan darken-3 z-depth-2">Filled Slots/Total Slots</span>

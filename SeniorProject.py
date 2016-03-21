@@ -6,9 +6,9 @@ import amm_db
 app = Flask(__name__)
 app.debug = True
 bcrypt = Bcrypt(app)
-app.secret_key = 'test'
+app.secret_key = ''
 
-db = amm_db.AmmDB()
+db = amm_db.AmmDB('')
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -103,19 +103,20 @@ def create_event():
     return render_template('create_event.html', key=utilities.get_maps_key(), user=user_info, categories=categories)
 
 
-@app.route('/search', methods=['POST','GET'])
+@app.route('/search', methods=['POST', 'GET'])
 def search():
     if session.get('user_id', None) is None:
         return redirect(url_for('main_page'))
     user_info = db.get_user(session.get('user_id'))
+    categories = db.get_activity_type()
 
     if request.method == 'POST':
         activity_name = request.form['activity-name']
         results = db.get_activity(name=activity_name)
-        return render_template('SearchResultsPage.html', user=user_info, results=results)
-    else:
-        return render_template('SearchResultsPage.html', user=user_info)
 
+        return render_template('SearchResultsPage.html', user=user_info, results=results, categories=categories)
+    else:
+        return render_template('SearchResultsPage.html', user=user_info, categories=categories)
 
 
 @app.route('/rosters')
