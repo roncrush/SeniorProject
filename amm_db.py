@@ -2,8 +2,8 @@ import MySQLdb as mysql
 
 
 class AmmDB(object):
-    def __init__(self):
-        self.conn = mysql.connect(host='ammdb.cwwnkw8gimhn.us-west-2.rds.amazonaws.com', port=3306, user='admin', passwd='adminadmin', db='mydb')
+    def __init__(self, password):
+        self.conn = mysql.connect(host='ammdb.cwwnkw8gimhn.us-west-2.rds.amazonaws.com', port=3306, user='admin', passwd=password, db='mydb')
         self.cursor = self.conn.cursor(mysql.cursors.DictCursor)
 
     def conn_check(self):
