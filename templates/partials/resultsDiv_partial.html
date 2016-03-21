@@ -37,7 +37,11 @@
                             <p>Description goes here</p>
                         </div>
                         <div class="col s2" style="margin-top: 6em;">
-                            <a class="btn waves-effect waves-light cyan darken-3">Join!</a>
+                            <form method="post">
+                                <button class="btn waves-effect waves-light" type="submit" name="join">Join
+                                </button>
+                                <input value="{{ record['id'] }}" name="activity-id" hidden>
+                            </form>
                         </div>
                     </div>
                 </div>

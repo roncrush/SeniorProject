@@ -6,9 +6,9 @@ import amm_db
 app = Flask(__name__)
 app.debug = True
 bcrypt = Bcrypt(app)
-app.secret_key = ''
+app.secret_key = 'test'
 
-db = amm_db.AmmDB('')
+db = amm_db.AmmDB('adminadmin')
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -111,10 +111,14 @@ def search():
     categories = db.get_activity_type()
 
     if request.method == 'POST':
-        activity_name = request.form['activity-name']
-        results = db.get_activity(name=activity_name)
+        if request.form.get('join', None) is None:
+            activity_name = request.form['activity-name']
+            results = db.get_activity(name=activity_name)
 
-        return render_template('SearchResultsPage.html', user=user_info, results=results, categories=categories)
+            return render_template('SearchResultsPage.html', user=user_info, results=results, categories=categories)
+        else:
+            db.add_user_activity(user_info[0]['id'], request.form['activity-id'])
+            return render_template('SearchResultsPage.html', user=user_info, categories=categories)
     else:
         return render_template('SearchResultsPage.html', user=user_info, categories=categories)
 

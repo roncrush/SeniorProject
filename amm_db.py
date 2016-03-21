@@ -71,6 +71,15 @@ class AmmDB(object):
                              latitude, longitude))
         self.conn.commit()
 
+    def add_user_activity(self, user_id, activity_id):
+        self.conn_check()
+
+        self.cursor.execute("INSERT INTO useractivity " +
+                            "(userid, activityid) " +
+                            "VALUES (%s, %s)",
+                            (user_id, activity_id))
+        self.conn.commit()
+
     def get_activity_type(self, activity_type_id='', name='', operator='AND'):
         self.conn_check()
 
@@ -136,9 +145,6 @@ class AmmDB(object):
             'passwd': passwd,
             'phone': phone,
         }
-
-
-
 
         set_statement = []
 
