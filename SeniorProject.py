@@ -109,7 +109,13 @@ def search():
         return redirect(url_for('main_page'))
     user_info = db.get_user(session.get('user_id'))
 
-    return render_template('SearchResultsPage.html', user=user_info, results=results)
+    if request.method == 'POST':
+        activity_name = request.form['activity-name']
+        results = db.get_activity(name=activity_name)
+        return render_template('SearchResultsPage.html', user=user_info, results=results)
+    else:
+        return render_template('SearchResultsPage.html', user=user_info)
+
 
 
 @app.route('/rosters')
@@ -126,17 +132,6 @@ def logout():
         return redirect(url_for('main_page'))
     session.clear()
     return redirect(url_for('main_page'))
-
-@app.route('/results')
-def results():
-    activity_name = request.form['activity-name']
-    category = request.form['category']
-    skill = request.form['skill']
-
-    results = db.get_activity(name=activity_name, category=category, skill=skill)
-
-    return render_template('SearchResultsPage.html',results=results)
-
 
 if __name__ == '__main__':
     app.run()
