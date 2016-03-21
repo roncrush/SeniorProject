@@ -8,3 +8,11 @@
     margin-top: 3em;
     text-align: center;
 }
+#ul{
+    margin-left: -.5em;
+    margin-right: -.45em;
+    border: none;
+}
+a{
+    height: 2em;
+}

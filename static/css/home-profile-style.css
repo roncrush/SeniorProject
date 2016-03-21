@@ -14,8 +14,8 @@
 
 .profile-content {
     background-color: ivory;
-    border: inset black;
-    border-radius: 5%;
+    #border: inset black;
+    border-radius: 3%;
 
 }
 
