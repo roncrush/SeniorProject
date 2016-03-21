@@ -6,13 +6,19 @@ import sys
 import random
 from flask.ext import bcrypt
 
+global password
+fil = open('pw')
+password = str(fil.readline())
+print(password)
+fil.close()
+
 class TestAmmDB(unittest.TestCase):
     def test_conn_check(self):
-        db = AmmDB(self.password)
+        db = AmmDB(password)
         self.assertFalse(db.conn.closed, self)
 
     def test_get_where_stmnt(self):
-        db = AmmDB(self.password)
+        db = AmmDB(password)
         observed = db.get_where_stmnt("", "testCol", "testVal", "", 'like')
         expected = "WHERE testCol LIKE '%testVal%' "
         self.assertEqual(observed, expected)
@@ -30,16 +36,16 @@ class TestAmmDB(unittest.TestCase):
         self.assertEqual(observed, expected)
 
     def test_check_email_exist(self):
-        db = AmmDB(self.password)
+        db = AmmDB(password)
         self.assertTrue(db.check_email_exist("test@test.com"), True)
 
     def test_check_uname_exist(self):
-        db = AmmDB(self.password)
+        db = AmmDB(password)
         self.assertTrue(db.check_uname_exist("test"), True)
 
     def test_get_user(self):
         # Positive
-        db = AmmDB(self.password)
+        db = AmmDB(password)
         passwd = b'$2b$12$Z2OaKVc39OH6duIxaKFnkefKztlq7oPiYpzdNHfSwQDvBRfFjVCJ6'
         observed = db.get_user(9, fn='test', email='test@test.com', phone='5555555555', ln='test', uname='test', operator='AND', exact=False)
         expected = ({'suspension': None, 'admin': 0, 'uname': 'test', 'passwd': passwd, 'email': 'test@test.com', 'id': 9, 'phone': '5555555555', 'fn': 'test', 'ln': 'test'},)
@@ -52,7 +58,7 @@ class TestAmmDB(unittest.TestCase):
 
     def test_add_user(self):
         # Positive
-        db = AmmDB(self.password)
+        db = AmmDB(password)
         usrname = str(random.randint(1000, 9999))
         mail = str(random.randint(1000, 9999)) + '@example.com'
         passwd = 'asdf'
@@ -67,7 +73,7 @@ class TestAmmDB(unittest.TestCase):
 
     def test_get_activity(self):
         # Positive
-        db = AmmDB(self.password)
+        db = AmmDB(password)
         observed = db.get_activity(1, 'testName', 4, 1, 3, 1, 25, 9, 'AND')
         expected = ({'id': 1, 'name': 'testName', 'numplayers': 3, 'available': 1, 'skill': 4, 'category': 25, 'longitude': Decimal('0.0000'), 'datetime': datetime.datetime(2017, 4, 13, 18, 36, 49), 'private': 0, 'latitude': Decimal('0.0000'), 'leader': 9, 'duration': 1},)
         self.assertEqual(observed, expected)
@@ -80,7 +86,7 @@ class TestAmmDB(unittest.TestCase):
     def test_add_activity(self):
         # Positive
         # Add user
-        db = AmmDB(self.password)
+        db = AmmDB(password)
         dur = random.randint(0, 10000)
         skil = random.randint(0,4)
         nplayers = random.randint(0, 10000)
@@ -94,7 +100,7 @@ class TestAmmDB(unittest.TestCase):
 
     def test_get_activity_type(self):
         # positive
-        db = AmmDB(self.password)
+        db = AmmDB(password)
         observed = db.get_activity_type('25', 'Arts and Crafts', 'AND')
         expected = ({'id': 25, 'name': 'Arts and Crafts'},)
         self.assertEqual(observed, expected)
@@ -106,7 +112,7 @@ class TestAmmDB(unittest.TestCase):
 
     def test_edit_user(self):
         # Positive
-        db = AmmDB(self.password)
+        db = AmmDB(password)
         passwd=b'$2b$12$Z2OaKVc39OH6duIxaKFnkefKztlq7oPiYpzdNHfSwQDvBRfFjVCJ6'
         #random.seed()
         #randomfn = random.randint(1, 100)
@@ -124,7 +130,7 @@ class TestAmmDB(unittest.TestCase):
 
     def test_get_user_activity(self):
         # Positive
-        db = AmmDB(self.password)
+        db = AmmDB(password)
         #looks like we are missing private_application in the DB
         #we're not missing private_application, it was removed from UserActivity
         #a few weeks ago because it is not needed in UserActivity because private is
@@ -143,5 +149,4 @@ class TestAmmDB(unittest.TestCase):
         pass
 
 if __name__ == '__main__':
-    TestAmmDB.password = sys.argv.pop()
     unittest.main()
