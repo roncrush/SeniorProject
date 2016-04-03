@@ -3,7 +3,6 @@
 }
 .main-content {
     margin-left: 25%;
-
 }
 
 .profile {
@@ -75,3 +74,53 @@ button.btn-floating {
     color: black;
 
 }
+
+td.current {
+    background: #b2dfdb;
+}
+
+td.highlight {
+  transition: background-color .25s ease;
+}
+
+td:hover {
+  background-color: lightgrey;
+}
+
+table.centered thead tr th, table.centered tbody tr td {
+  text-align: center;
+}
+
+th {
+    border-bottom: darkblue 4px solid;
+    border-right: outset;
+}
+tr, td {
+    background-color: inherit;
+}
+
+table{
+    background-color: ivory;
+}
+td, th {
+    border-right: 2px red;
+    border-collapse: collapse;
+  display: table-cell;
+  text-align: center;
+  vertical-align: top;
+}
+
+table.bordered > thead > tr,
+table.bordered > tbody > tr {
+  border-bottom: 1px solid #d0d0d0;
+
+}
+
+table, th, td {
+  border-right: 1px grey;
+}
+
+h6 {
+    font-size: x-small;
+}
+
