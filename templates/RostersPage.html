@@ -5,18 +5,44 @@
 {% block content %}
 
  <!-- Link to Results page css-->
-<link id="results-stylesheet" rel="stylesheet" href="../static/css/ResultsPage.css">
+<link id="results-stylesheet" rel="stylesheet" href="../static/css/rosters-page-style.css">
 
 {% include "partials/navbar_partial.html" %}
 <div class="row">
     {% include "partials/sidebar_partial.html" %}
-    <div class="col l10 offset-l2">
-        <div class="container">
-            <div class="row">
-                {% include "partials/searchFilter_partial.html" %}
+    <div class="col l10 offset-l2" id="rostersContent">
+        <div class="row" align="center">
+            <p class="flow-text"><h1>Rosters</h1></p>
+        </div>
+        <div class="row" id="container">
+            <div class="col eventList l8 cyan darken-2 z-depth-2">
+
             </div>
-            <div class="row">
-                {% include "partials/searchFilter_partial.html" %}
+            <div class="col l3 offset-l1">
+                <div class="row white-text" align="center"><p><h4>Add Players</h4></p></div>
+                <div class="row playerList cyan darken-2 z-depth-2">
+                    <ul>
+                        {% include "partials/playerList_partial.html" %}
+                        {% include "partials/playerList_partial.html" %}
+                        {% include "partials/playerList_partial.html" %}
+                        {% include "partials/playerList_partial.html" %}
+                    </ul>
+                </div>
+                <div class="row" align="center">
+                    <a class="waves-effect waves-light btn">Add</a>
+                </div>
+                <div class="row white-text" align="center"><p><h4>Current Players</h4></p></div>
+                <div class="row playerList cyan darken-2 z-depth-2">
+                    <ul>
+                        {% include "partials/playerList_partial.html" %}
+                        {% include "partials/playerList_partial.html" %}
+                        {% include "partials/playerList_partial.html" %}
+                        {% include "partials/playerList_partial.html" %}
+                    </ul>
+                </div>
+                <div class="row" align="center">
+                    <a class="waves-effect waves-light btn">Kick</a>
+                </div>
             </div>
         </div>
     </div>
