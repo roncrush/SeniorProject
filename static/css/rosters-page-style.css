@@ -1,0 +1,32 @@
+.playerList{
+    height: 20em;
+    max-height: 20em;
+    overflow-y: scroll;
+}
+.eventList{
+    height: 58em;
+    max-height: 58em;
+    overflow-y: scroll;
+    margin-top: 1em;
+}
+
+#rostersContent{
+    margin-top: 3em;
+}
+
+#container{
+    width: 95%;
+}
+ul{
+    margin-top: 0;
+}
+ul li{
+    display: block;
+    padding-left: 1em;
+}
+ul li:hover{
+    background: #006064;
+}
+ul li:active{
+    color: #006064;
+}
