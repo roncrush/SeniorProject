@@ -27,7 +27,7 @@
                         <div class="input-field col s12 m4 white-text">
                             <select name="category">
                                 {% for category in categories %}
-                                    <option value="{{ category['id'] }}">{{ category['name'] }}</option>
+                                    <option value="{{ category['id'] }}">{{ category['category_name'] }}</option>
                                 {% endfor %}
                             </select>
                             <label>Category</label>
@@ -72,7 +72,7 @@
                         <div class="col s5 m4 input-field">
                             <input id="num-of-players" name="num-of-players" min="0" type="number"
                                    oninput="validity.valid || (value = '')" class="validate">
-                            <label for="num-of-players">Number of Players</label>
+                            <label for="num-of-players">Number of People</label>
                         </div>
 
                         <div class="col s7 m4 push-m4 input-field">

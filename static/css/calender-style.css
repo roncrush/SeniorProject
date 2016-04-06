@@ -1,0 +1,29 @@
+td {
+    height: 100px;
+}
+
+td:hover {
+  background-color: lightgrey;
+}
+
+th {
+    border-bottom: darkblue 4px solid;
+    border-right: outset;
+}
+
+table{
+    background-color: ivory;
+}
+
+td, th {
+    border-right: 2px red;
+    border-collapse: collapse;
+    display: table-cell;
+    text-align: center;
+    vertical-align: top;
+}
+
+td a {
+    display:block;
+    width:100%;
+}
