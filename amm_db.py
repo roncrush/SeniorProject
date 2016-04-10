@@ -162,6 +162,15 @@ class AmmDB(object):
 
         return data
 
+    def edit_user_activity_is_applicant(self, user_id, activity_id, is_applicant):
+
+        self.conn_check()
+
+        self.cursor.execute("UPDATE useractivity SET isApplicant = %s WHERE activityid = %s AND userid = %s",
+                            is_applicant, activity_id, user_id)
+
+        self.conn.commit()
+
     def edit_user(self, user_id='', email='', fname='', lname='', passwd='', phone=''):
 
         self.conn_check()
@@ -222,7 +231,7 @@ class AmmDB(object):
 
         return data
 
-    def get_user_activity(self, user_id='', activity_id='', is_applicant=0, operator='AND'):
+    def get_user_activity(self, user_id='', activity_id='', is_applicant='', operator='AND'):
         self.conn_check()
 
         where_query = ''
@@ -238,6 +247,7 @@ class AmmDB(object):
                 where_query += self.get_where_stmnt(where_query, param, str(value), operator)
 
         self.cursor.execute("SELECT * FROM useractivity " + where_query)
+
         data = self.cursor.fetchall()
 
         return data
