@@ -202,7 +202,7 @@ class AmmDB(object):
             return None
 
     def get_user(self, user_id='', uname='', email='', phone='', fn='', ln='', operator='AND', similar=False,
-                 exact=False):
+                 exact=False, select='*'):
         self.conn_check()
 
         where_query = ""
@@ -226,7 +226,7 @@ class AmmDB(object):
         if exact and where_query == '':
             return ''
 
-        self.cursor.execute("SELECT * FROM user " + where_query)
+        self.cursor.execute("SELECT " + select + " FROM user " + where_query)
         data = self.cursor.fetchall()
 
         return data
