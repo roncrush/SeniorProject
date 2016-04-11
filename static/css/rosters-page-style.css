@@ -10,7 +10,7 @@
     margin-top: 1em;
 }
 
-#rostersContent{
+#rostersContent {
     margin-top: 3em;
 }
 
@@ -35,6 +35,12 @@ ul{
 ul li:hover{
     background: #006064;
 }
-ul li:active{
+
+ul li:active {
     color: #006064;
+}
+
+#selectable-activities .ui-selected {
+    background: #E3F2FD;
+    color: white;
 }

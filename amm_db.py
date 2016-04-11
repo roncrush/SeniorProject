@@ -1,9 +1,10 @@
 import MySQLdb as mysql
+import utilities
 
 
 class AmmDB(object):
-    def __init__(self, password):
-        self.conn = mysql.connect(host='ammdb.cwwnkw8gimhn.us-west-2.rds.amazonaws.com', port=3306, user='admin', passwd=password, db='mydb')
+    def __init__(self, host, password):
+        self.conn = mysql.connect(host=host, port=3306, user='admin', passwd=password, db='mydb')
         self.cursor = self.conn.cursor(mysql.cursors.DictCursor)
 
     def conn_check(self):
@@ -15,9 +16,9 @@ class AmmDB(object):
 
         if where_query == "":
             if compare == 'like':
-                return "WHERE " + col_name + " LIKE '%" + value + "%' "
+                return " WHERE " + col_name + " LIKE '%" + value + "%' "
             else:
-                return "WHERE " + col_name + " = '" + value + "'"
+                return " WHERE " + col_name + " = '" + value + "'"
         else:
             if compare == 'like':
                 return " " + operator + " " + col_name + " LIKE '%" + value + "%' "
@@ -71,13 +72,13 @@ class AmmDB(object):
                              latitude, longitude))
         self.conn.commit()
 
-    def add_user_activity(self, user_id, activity_id):
+    def add_user_activity(self, user_id, activity_id, is_applicant):
         self.conn_check()
 
         self.cursor.execute("INSERT INTO useractivity " +
-                            "(userid, activityid) " +
-                            "VALUES (%s, %s)",
-                            (user_id, activity_id))
+                            "(userid, activityid, isApplicant) " +
+                            "VALUES (%s, %s, %s)",
+                            (user_id, activity_id, is_applicant))
         self.conn.commit()
 
     def get_activity_type(self, activity_type_id='', name='', operator='AND'):
@@ -87,12 +88,12 @@ class AmmDB(object):
 
         params = {
             'id': activity_type_id,
-            'name': name,
+            'category_name': name,
         }
 
         for param, value in params.items():
             if value != '':
-                if param == 'name':
+                if param == 'category_name':
                     where_query += self.get_where_stmnt(where_query, param, value, operator, 'like')
                 else:
                     where_query += self.get_where_stmnt(where_query, param, str(value), operator)
@@ -109,8 +110,8 @@ class AmmDB(object):
         where_query = ""
 
         params = {
-            'id': activity_id,
-            'name': name,
+            'activity_id': activity_id,
+            'activity_name': name,
             'skill': skill,
             'duration': duration,
             'numplayers': numplayers,
@@ -131,6 +132,45 @@ class AmmDB(object):
 
         return data
 
+    def get_act_type_join(self, activitytype_id='', activity_id='', name='', skill='', duration='', numplayers='',
+                          available='', category='', leader='', operator='AND'):
+        self.conn_check()
+
+        where_query = ""
+
+        params = {
+            'id': activitytype_id,
+            'activity_id': activity_id,
+            'activity_name': name,
+            'skill': skill,
+            'duration': duration,
+            'numplayers': numplayers,
+            'available': available,
+            'category': category,
+            'leader': leader,
+        }
+
+        for param, value in params.items():
+            if value != '':
+                if param == 'activity_name':
+                    where_query += self.get_where_stmnt(where_query, param, value, operator, 'like')
+                else:
+                    where_query += self.get_where_stmnt(where_query, param, str(value), operator)
+
+        self.cursor.execute("SELECT * FROM activity INNER JOIN activitytype ON id = activity_id" + where_query)
+        data = self.cursor.fetchall()
+
+        return data
+
+    def edit_user_activity_is_applicant(self, user_id, activity_id, is_applicant):
+
+        self.conn_check()
+
+        self.cursor.execute("UPDATE useractivity SET isApplicant = %s WHERE activityid = %s AND userid = %s",
+                            is_applicant, activity_id, user_id)
+
+        self.conn.commit()
+
     def edit_user(self, user_id='', email='', fname='', lname='', passwd='', phone=''):
 
         self.conn_check()
@@ -150,9 +190,9 @@ class AmmDB(object):
 
         for param, value in params.items():
             if value != '':
-                set_statement.append(param + "=" + "\'"+value+"\'")
+                set_statement.append(param + "=" + "\'" + value + "\'")
 
-        uid = "id=\'"+str(user_id)+"\'"
+        uid = "id=\'" + str(user_id) + "\'"
 
         if len(set_statement) > 0:
             self.cursor.execute('''UPDATE user SET {} WHERE {}'''.format(', '.join(set_statement), uid))
@@ -162,7 +202,7 @@ class AmmDB(object):
             return None
 
     def get_user(self, user_id='', uname='', email='', phone='', fn='', ln='', operator='AND', similar=False,
-                 exact=False):
+                 exact=False, select='*'):
         self.conn_check()
 
         where_query = ""
@@ -186,12 +226,12 @@ class AmmDB(object):
         if exact and where_query == '':
             return ''
 
-        self.cursor.execute("SELECT * FROM user " + where_query)
+        self.cursor.execute("SELECT " + select + " FROM user " + where_query)
         data = self.cursor.fetchall()
 
         return data
 
-    def get_user_activity(self, user_id='', activity_id='', operator='AND'):
+    def get_user_activity(self, user_id='', activity_id='', is_applicant='', operator='AND'):
         self.conn_check()
 
         where_query = ''
@@ -199,6 +239,7 @@ class AmmDB(object):
         params = {
             'userid': user_id,
             'activityid': activity_id,
+            'isApplicant': is_applicant,
         }
 
         for param, value in params.items():
@@ -206,9 +247,7 @@ class AmmDB(object):
                 where_query += self.get_where_stmnt(where_query, param, str(value), operator)
 
         self.cursor.execute("SELECT * FROM useractivity " + where_query)
+
         data = self.cursor.fetchall()
 
         return data
-
-
-

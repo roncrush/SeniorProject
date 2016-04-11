@@ -1,12 +1,12 @@
 .mainBackgroundDiv{
-  height: 38em;
+  height: 48em;
   width: 100%;
   margin-top: .5em;
   position: absolute;
   z-index: -3;
 }
 .mainPictureContainer{
-  height: 35em;
+  height: 45em;
   width: 100%;
   margin-top: .5em;
   margin-left: auto;
