@@ -8,11 +8,29 @@
     margin-top: 3em;
     text-align: center;
 }
-#ul{
-    margin-left: -.5em;
-    margin-right: -.45em;
-    border: none;
+#sidebar-div{
+    margin-right: 0;
 }
-a{
-    height: 2em;
+#sidebar-ul{
+    text-align: center;
 }
+
+ul li{
+    display: block;
+    color: white;
+}
+ul li a div{
+    line-height: 2.5em;
+    height: 2.5em;
+}
+ul li a div span{
+    font-size: 1.3em;
+}
+ul li:hover{
+    background: #006064;
+}
+ul li:active{
+    background: #006064;
+}
+
+

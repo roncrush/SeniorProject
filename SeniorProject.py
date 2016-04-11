@@ -11,7 +11,7 @@ app.debug = True
 bcrypt = Bcrypt(app)
 app.secret_key = 'test'
 
-db = amm_db.AmmDB('', '')
+db = amm_db.AmmDB('ammdb.cwwnkw8gimhn.us-west-2.rds.amazonaws.com', 'adminadmin')
 
 
 @app.route('/', methods=['GET', 'POST'])
