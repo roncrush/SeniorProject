@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for, jsonify
 from flask.ext.bcrypt import Bcrypt
 import utilities
 import amm_db
@@ -148,18 +148,42 @@ def calender():
         activity_details['longitude'] = float(activity_details['longitude'])
         activity_details['time'] = int(time.mktime(activity_details['datetime'].timetuple())) * 1000
         act_list.append(activity_details)
-    print(act_list)
+
     return render_template('calender.html', user=user_info, date=date, activities=act_list,
                            maps_key=utilities.get_key('google_maps'))
 
 
-@app.route('/rosters')
+@app.route('/rosters', methods=['GET', 'POST'])
 def rosters():
     if session.get('user_id', None) is None:
         return redirect(url_for('main_page'))
     user_info = db.get_user(session.get('user_id'))
-    return render_template('RostersPage.html', user=user_info)
 
+    act_list = []
+    activities = db.get_user_activity(user_id=user_info[0]['id'])
+    for activity in activities:
+        activity_details = db.get_activity(activity_id=activity['activityid'])[0]
+        activity_details['latitude'] = float(activity_details['latitude'])
+        activity_details['longitude'] = float(activity_details['longitude'])
+        activity_details['time'] = int(time.mktime(activity_details['datetime'].timetuple())) * 1000
+        activity_details['date'] = activity_details['datetime'].date().strftime('%m/%d/%Y')
+        act_list.append(activity_details)
+
+    if request.method == 'GET':
+        if request.args.get('loadActivityID') is not None:
+            print(request.args['loadActivityID'])
+            user_activity = db.get_user_activity(activity_id=request.args['loadActivityID'])
+
+            users = []
+            for record in user_activity:
+                user = db.get_user(user_id=record['userid'], select='id, uname')[0]
+                user['approved'] = record['isApplicant']
+                users.append(user)
+            print(users)
+            return jsonify(users=users)
+
+    return render_template('RostersPage.html', user=user_info, activities=act_list,
+                           maps_key=utilities.get_key('google_maps'))
 
 @app.route('/logout')
 def logout():
