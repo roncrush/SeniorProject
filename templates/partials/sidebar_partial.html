@@ -5,7 +5,7 @@
         </div>
         <div>
             <ul class="row collection with-header flow-text" id="ul">
-                <li class="collection-header cyan darken-2 center-align"><h4>{{ user[0]['uname'] }}</h4></li>
+                <li class="collection-header cyan darken-2 center-align"><h4 class="truncate">{{ user[0]['uname'] }}</h4></li>
                 <a href="{{ url_for('home') }}" class="collection-item center-align" >Home</a>
                 <a href="{{ url_for('profile') }}" class="collection-item center-align">View Profile</a>
                 <a href="{{ url_for('rosters') }}" class="collection-item center-align">View Rosters</a>
