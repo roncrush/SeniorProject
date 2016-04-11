@@ -2,15 +2,14 @@ import unittest
 from amm_db import AmmDB
 import datetime
 from decimal import *
-import sys
+import utilities
 import random
 from flask.ext import bcrypt
 
 global password
-fil = open('pw')
-password = str(fil.readline())
+password = utilities.get_key('db_pass')
 print(password)
-fil.close()
+
 
 class TestAmmDB(unittest.TestCase):
     def test_conn_check(self):
