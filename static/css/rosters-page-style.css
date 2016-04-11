@@ -1,40 +1,38 @@
-.playerList{
+.playerList {
     height: 20em;
     max-height: 20em;
     overflow-y: scroll;
 }
-.eventList{
+
+.eventList {
     height: 58em;
     max-height: 58em;
     overflow-y: scroll;
     margin-top: 1em;
 }
 
-#rostersContent{
+#rostersContent {
     margin-top: 3em;
 }
 
-#container{
-    width: 95%;
-}
-ul{
+ul {
     margin-top: 0;
 }
-.roster li{
+
+ul li {
     display: block;
     padding-left: 1em;
 }
 
-.roster li a div{
-    height: 1.5em;
-    line-height: 1.5em;
-}
-.roster li a div span{
-    font-size: 1em;
-}
-ul li:hover{
+ul li:hover {
     background: #006064;
 }
-ul li:active{
+
+ul li:active {
     color: #006064;
+}
+
+#selectable-activities .ui-selected {
+    background: #82B1FF;
+    color: white;
 }

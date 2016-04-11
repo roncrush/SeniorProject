@@ -17,7 +17,7 @@ db = amm_db.AmmDB('ammdb.cwwnkw8gimhn.us-west-2.rds.amazonaws.com', 'adminadmin'
 @app.route('/', methods=['GET', 'POST'])
 def main_page():
     session['userID'] = None
-
+    db.get_last_id()
     if request.method == 'POST':
         if request.form.get('email', None) is not None:
             db.add_user(fn=request.form['first_name'], ln=request.form['last_name'], email=request.form['email'],
