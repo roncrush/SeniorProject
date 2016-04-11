@@ -3,14 +3,14 @@
         <div class=" row sidebar-profile-image">
             <img class="circle responsive-img hoverable z-depth-1" src="../static/images/no_pic.png">
         </div>
-        <div>
-            <ul class="row collection with-header flow-text" id="ul">
-                <li class="collection-header cyan darken-2 center-align"><h4>{{ user[0]['uname'] }}</h4></li>
-                <a href="{{ url_for('home') }}" class="collection-item center-align" >Home</a>
-                <a href="{{ url_for('profile') }}" class="collection-item center-align">View Profile</a>
-                <a href="{{ url_for('rosters') }}" class="collection-item center-align">View Rosters</a>
-                <a href="{{ url_for('search') }}" class="collection-item center-align">Calendar</a>
-                <a href="{{ url_for('logout') }}" class="collection-item center-align">Logout</a>
+        <div id="sidebar-div">
+            <div class="center-align white-text"><h3>{{ user[0]['uname'] }}</h3></div>
+            <ul class="row flow-text white-text" id="sidebar-ul">
+                <li><a href="{{ url_for('home') }}"><div class="flow-text white-text"><span>Home</span></div></a></li>
+                <li><a href="{{ url_for('profile') }}"><div class="flow-text white-text"><span>View Profile</span></div></a></li>
+                <li><a href="{{ url_for('rosters') }}"><div class="flow-text white-text"><span>View Rosters</span></div></a></li>
+                <li><a href="{{ url_for('search') }}"><div class="flow-text white-text"><span>Calendar</span></div></a></li>
+                <li><a href="{{ url_for('logout') }}"><div class="flow-text white-text"><span>Logout</span></div></a></li>
             </ul>
         </div>
     </div>

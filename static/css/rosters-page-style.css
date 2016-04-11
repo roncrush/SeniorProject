@@ -20,9 +20,17 @@
 ul{
     margin-top: 0;
 }
-ul li{
+.roster li{
     display: block;
     padding-left: 1em;
+}
+
+.roster li a div{
+    height: 1.5em;
+    line-height: 1.5em;
+}
+.roster li a div span{
+    font-size: 1em;
 }
 ul li:hover{
     background: #006064;

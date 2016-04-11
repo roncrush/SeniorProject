@@ -11,8 +11,8 @@
 <div class="row">
     {% include "partials/sidebar_partial.html" %}
     <div class="col l10 offset-l2" id="rostersContent">
-        <div class="row" align="center">
-            <p class="flow-text"><h1>Rosters</h1></p>
+        <div class="row white-text" align="center">
+            <p class="flow-text "><h1>Rosters</h1></p>
         </div>
         <div class="row" id="container">
             <div class="col eventList l8 cyan darken-2 z-depth-2">
@@ -21,7 +21,7 @@
             <div class="col l3 offset-l1">
                 <div class="row white-text" align="center"><p><h4>Add Players</h4></p></div>
                 <div class="row playerList cyan darken-2 z-depth-2">
-                    <ul>
+                    <ul class="roster">
                         {% include "partials/playerList_partial.html" %}
                         {% include "partials/playerList_partial.html" %}
                         {% include "partials/playerList_partial.html" %}
@@ -33,7 +33,7 @@
                 </div>
                 <div class="row white-text" align="center"><p><h4>Current Players</h4></p></div>
                 <div class="row playerList cyan darken-2 z-depth-2">
-                    <ul>
+                    <ul class="roster">
                         {% include "partials/playerList_partial.html" %}
                         {% include "partials/playerList_partial.html" %}
                         {% include "partials/playerList_partial.html" %}
