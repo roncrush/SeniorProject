@@ -72,10 +72,6 @@ class AmmDB(object):
                      longitude):
         self.conn_check()
 
-        is_applicant = 0
-        if private == 1:
-            is_applicant = 1
-
         self.cursor.execute("INSERT INTO activity " +
                             "(activity_name, skill, datetime, duration, numplayers, private, available, category, leader, "
                             "latitude, longitude) " +
@@ -86,7 +82,7 @@ class AmmDB(object):
         self.conn.commit()
 
         self.cursor.execute("INSERT INTO useractivity (userid, activityid, isApplicant) "
-                            "VALUES (%s, last_insert_id(), %s)", (leader, is_applicant))
+                            "VALUES (%s, last_insert_id(), %s)", (leader, 0))
         self.conn.commit()
 
     def add_user_activity(self, user_id, activity_id, is_applicant):
