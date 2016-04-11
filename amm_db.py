@@ -25,6 +25,14 @@ class AmmDB(object):
             else:
                 return " " + operator + " " + col_name + " = '" + value + "'"
 
+    def get_last_id(self):
+        self.conn_check()
+
+        self.cursor.execute("SELECT last_insert_id()")
+        data = self.cursor.fetchone()
+
+        print(data)
+
     def check_email_exist(self, email):
         self.conn_check()
 
@@ -64,12 +72,17 @@ class AmmDB(object):
                      longitude):
         self.conn_check()
 
+        is_applicant = 0
+        if private == 1:
+            is_applicant = 1
+
         self.cursor.execute("INSERT INTO activity " +
-                            "(name, skill, datetime, duration, numplayers, private, available, category, leader, "
+                            "(activity_name, skill, datetime, duration, numplayers, private, available, category, leader, "
                             "latitude, longitude) " +
-                            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s); "
+                            "INSERT INTO useractivity (userid, activityid, isApplicant) VALUES (%s, last_insert_id(), %s)",
                             (name, skill, datetime, duration, numplayers, private, available, category, leader,
-                             latitude, longitude))
+                             latitude, longitude, leader, is_applicant))
         self.conn.commit()
 
     def add_user_activity(self, user_id, activity_id, is_applicant):
@@ -202,7 +215,7 @@ class AmmDB(object):
             return None
 
     def get_user(self, user_id='', uname='', email='', phone='', fn='', ln='', operator='AND', similar=False,
-                 exact=False):
+                 exact=False, select='*'):
         self.conn_check()
 
         where_query = ""
@@ -226,7 +239,7 @@ class AmmDB(object):
         if exact and where_query == '':
             return ''
 
-        self.cursor.execute("SELECT * FROM user " + where_query)
+        self.cursor.execute("SELECT " + select + " FROM user " + where_query)
         data = self.cursor.fetchall()
 
         return data
