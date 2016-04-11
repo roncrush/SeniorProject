@@ -80,9 +80,13 @@ class AmmDB(object):
                             "(activity_name, skill, datetime, duration, numplayers, private, available, category, leader, "
                             "latitude, longitude) " +
                             "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s); "
-                            "INSERT INTO useractivity (userid, activityid, isApplicant) VALUES (%s, last_insert_id(), %s)",
+                            "",
                             (name, skill, datetime, duration, numplayers, private, available, category, leader,
-                             latitude, longitude, leader, is_applicant))
+                             latitude, longitude,))
+        self.conn.commit()
+
+        self.cursor.execute("INSERT INTO useractivity (userid, activityid, isApplicant) "
+                            "VALUES (%s, last_insert_id(), %s)", (leader, is_applicant))
         self.conn.commit()
 
     def add_user_activity(self, user_id, activity_id, is_applicant):
