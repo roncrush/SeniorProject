@@ -2,18 +2,18 @@
 
             <div class="row">
                 <div class="search-filter white z-depth-3">
-                   <form class="row" method="post">
+                   <form class="row" method="post" >
                        <div class="input-field col s3" style="margin-left: 1.2em;">
                            <input placeholder="Search" type="text" name="activity-name">
                            <label for="search"></label>
                        </div>
-                       <div class="input-field col">
-                           <button class="btn waves-effect waves-light" type="submit" name="search">Search</button>
+                       <div class="input-field col s1">
+                           <button class="btn" type="submit" name="search">Search</button>
                        </div>
-                       <div class="input-field col" style="margin-left: .5em">
+                       <div class="input-field col s2" style="margin-left: 3em">
                            <input placeholder="Location" type="text" name="location">
                        </div>
-                       <div class="input-field col">
+                       <div class="input-field col s2">
                            <select name="category">
                                {% if categories is not none %}
                                    <option value="{{ categories['id'] }}">{{ categories['name'] }}</option>
@@ -26,10 +26,11 @@
                        </div>
                        <div class="input-field col s2" style="margin-right: -.5em;">
                            <select multiple name="skill">
-                               <option value="" disabled selected>Skill Level</option>
-                               <option value="1">example 1</option>
-                               <option value="2">example 2</option>
-                               <option value="3">example 3</option>
+                               <option value="" disabled selected>Skill</option>
+                               <option value="1">beginner</option>
+                               <option value="2">intermediate</option>
+                               <option value="3">advanced</option>
+                               <option value="4">expert</option>
                            </select>
                        </div>
                    </form>
