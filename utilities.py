@@ -12,7 +12,7 @@ def combine_datetime(date, time_input):
 
 
 def get_key(key_name):
-    with open('key.txt', 'r') as key_file:
+    with open('C:/wamp/bin/apache/apache2.4.9/cgi-bin/Projects/SeniorProject/key.txt', 'r') as key_file:
         for line in key_file:
             if key_name in line:
                 return line.split(':')[1].strip()

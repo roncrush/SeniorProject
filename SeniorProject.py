@@ -11,7 +11,7 @@ app.debug = True
 bcrypt = Bcrypt(app)
 app.secret_key = 'test'
 
-db = amm_db.AmmDB('', '')
+db = amm_db.AmmDB(utilities.get_key('db_host'),utilities.get_key('db_pass'))
 
 
 @app.route('/', methods=['GET', 'POST'])
