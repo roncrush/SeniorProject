@@ -12,12 +12,12 @@
     <div class="row">
         {% include "partials/sidebar_partial.html" %}
         <div class="col l9 offset-m3 offset-l3" id="rostersContent">
-            <div class="row">
-                <div class="col s12 center">
+            <div class="row" id="container">
+                <div class="col s12 center white-text">
                     <h1>Rosters</h1>
                 </div>
 
-                <div class="col l6 s12 eventList l8 cyan darken-2 z-depth-2">
+                <div class="col l7 s12 eventList cyan darken-2 z-depth-2">
                     <div class="row" id="selectable-activities">
                         {% for activity in activities %}
                             <div class="col s12">
@@ -46,20 +46,23 @@
                     </div>
                 </div>
 
-                <div class="col l3 s12">
+                <div class="col l3 offset-l1 s12">
                     <div class="row">
                         <div class="col s12 white-text" align="center">
                             <h4>Add Players</h4>
                         </div>
+                    </div>
 
-                        <div class="col s12 playerList cyan darken-2 z-depth-2">
-                            <form method="get">
-                                <ul class="unapproved-list">
-                                </ul>
-                            </form>
+                        <div class="row">
+                            <div class="col s12 playerList cyan darken-2 z-depth-2">
+                                <form method="get">
+                                    <ul class="unapproved-list">
+                                    </ul>
+                                </form>
+                            </div>
                         </div>
 
-                        <div class="col s12" align="center">
+                        <div class="row" align="center">
                             <a class="waves-effect waves-light btn">Add</a>
                         </div>
 
@@ -67,15 +70,19 @@
                             <h4>Current Players</h4>
                         </div>
 
+                        <div class="row">
                         <div class="col s12 playerList cyan darken-2 z-depth-2">
                             <ul class="approved-list">
                             </ul>
                         </div>
-
-                        <div class="col s12" align="center">
-                            <a class="waves-effect waves-light btn">Kick</a>
                         </div>
-                    </div>
+
+                        <div class="row">
+                            <div class="col s12" align="center">
+                                <a class="waves-effect waves-light btn">Kick</a>
+                            </div>
+                        </div>
+
                 </div>
             </div>
         </div>
