@@ -91,27 +91,27 @@
                     itemID = item.attr('id');
                     activityID = itemID.replace(/-activity-address/, '');
 
+
+                    $('.unapproved-list').empty();
+                    $('.approved-list').empty();
+
                     unapprovedList = [];
                     approvedList = [];
-
                     $.getJSON('{{ url_for('rosters') }}', {loadActivityID: activityID}).done(function (json) {
                         $.each(json.users, function (index, value) {
-                            if (value.approved == 1) {
+                            if(value.approved == 1){
                                 approvedList.push('<li><a href="#!"><div class="flow-text white-text"><span>' + value.uname + '</span>' +
-                                        '</div><input hidden name="user-id" value="' + value.id + '"> </a></li>');
+                                        '</div><input hidden name="user-id" value="' + value.id +'"> </a></li>');
                             }
-                            else {
+                            else{
                                 unapprovedList.push('<li><a href="#!"><div class="flow-text white-text"><span>' + value.uname + '</span>' +
-                                        '</div><input hidden name="user-id" value="' + value.id + '"> </a></li>');
+                                        '</div><input hidden name="user-id" value="' + value.id +'"> </a></li>');
                             }
-                        });
+                        })
 
-                        $('.unapproved-list').empty();
                         $('.unapproved-list').append(unapprovedList.join(''));
-                        $('.approved-list').empty();
                         $('.approved-list').append(approvedList.join(''))
-                    });
-
+                    })
                 },
                 selecting: function (event, ui) {
                     if ($(".ui-selected, .ui-selecting").length > 1) {

@@ -25,6 +25,14 @@ class AmmDB(object):
             else:
                 return " " + operator + " " + col_name + " = '" + value + "'"
 
+    def get_last_id(self):
+        self.conn_check()
+
+        self.cursor.execute("SELECT last_insert_id()")
+        data = self.cursor.fetchone()
+
+        print(data)
+
     def check_email_exist(self, email):
         self.conn_check()
 
@@ -65,11 +73,16 @@ class AmmDB(object):
         self.conn_check()
 
         self.cursor.execute("INSERT INTO activity " +
-                            "(name, skill, datetime, duration, numplayers, private, available, category, leader, "
+                            "(activity_name, skill, datetime, duration, numplayers, private, available, category, leader, "
                             "latitude, longitude) " +
-                            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s); "
+                            "",
                             (name, skill, datetime, duration, numplayers, private, available, category, leader,
-                             latitude, longitude))
+                             latitude, longitude,))
+        self.conn.commit()
+
+        self.cursor.execute("INSERT INTO useractivity (userid, activityid, isApplicant) "
+                            "VALUES (%s, last_insert_id(), %s)", (leader, 0))
         self.conn.commit()
 
     def add_user_activity(self, user_id, activity_id, is_applicant):
