@@ -26,10 +26,10 @@ ul li a div{
 ul li a div span{
     font-size: 1.3em;
 }
-ul li:hover{
+#sidebar-ul li:hover{
     background: #006064;
 }
-ul li:active{
+#sidebar-ul li:active{
     background: #006064;
 }
 

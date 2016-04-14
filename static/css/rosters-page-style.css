@@ -32,15 +32,18 @@ ul{
 .roster li a div span{
     font-size: 1em;
 }
-ul li:hover{
-    background: #006064;
-}
-
-ul li:active {
-    color: #006064;
-}
 
 #selectable-activities .ui-selected {
+    background: #82B1FF;
+    color: white;
+}
+
+#selectable-unapproved .ui-selected {
+    background: #82B1FF;
+    color: white;
+}
+
+#selectable-approved .ui-selected {
     background: #82B1FF;
     color: white;
 }
