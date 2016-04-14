@@ -179,6 +179,20 @@
             $('.unapproved-list').find('.ui-selected').remove();
             $('.approved-list').append(approvedList.join(''));
 
+            $.ajax({
+                method: "POST",
+                url: '/rosters',
+                data: {
+                    activityID: activityID,
+                    playerID: selectedUserID
+                }
+            })
+            .done(function(){
+                alert("Player added successfully")
+            });
+
+
+
         }
 
         function kickPlayerFromActivity(){
