@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect, url_for, jsonify
+from flask import Flask, render_template, request, session, redirect, url_for, jsonify, json
 from flask.ext.bcrypt import Bcrypt
 import utilities
 import amm_db
@@ -99,9 +99,8 @@ def create_event():
 
         db.add_activity(name=activity_name, category=category, datetime=datetime, duration=duration, latitude=latitude,
                         longitude=longitude, numplayers=num_of_players, skill=skill, private=private, leader=session.get
-                        ('user_id'), available=1)
-        db.add_user_activity(session.get('user_id'), db.get_activity(name=activity_name, category=category, skill=skill,
-                                                                     leader=session.get('user_id')))
+            ('user_id'), available=1)
+
         redirect(url_for('home'))
 
     return render_template('create_event.html', key=utilities.get_key('google_maps'), user=user_info,
@@ -147,10 +146,25 @@ def calender():
         activity_details['latitude'] = float(activity_details['latitude'])
         activity_details['longitude'] = float(activity_details['longitude'])
         activity_details['time'] = int(time.mktime(activity_details['datetime'].timetuple())) * 1000
-        act_list.append(activity_details)
 
+        act_list.append(activity_details)
     return render_template('calender.html', user=user_info, date=date, activities=act_list,
                            maps_key=utilities.get_key('google_maps'))
+
+
+@app.route('/leave_activity', methods=['POST', 'GET'])
+def leave_activity():
+
+    data = request.form.get('data')
+    u_id = data['user_id']
+    a_id = data['activity_id']
+    print(data)
+    print(u_id)
+    print(a_id)
+   # print(user_id)
+    #print(activity_id)
+    #db.leave_activity(u_id, a_id)
+    return redirect(url_for('calender'))
 
 
 @app.route('/rosters', methods=['GET', 'POST'])
@@ -184,6 +198,7 @@ def rosters():
 
     return render_template('RostersPage.html', user=user_info, activities=act_list,
                            maps_key=utilities.get_key('google_maps'))
+
 
 @app.route('/logout')
 def logout():

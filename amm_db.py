@@ -264,3 +264,20 @@ class AmmDB(object):
         data = self.cursor.fetchall()
 
         return data
+
+    # Leave Activity #
+    def leave_activity(self, user_id='', activity_id=''):
+
+        self.conn_check()
+
+        u_id = '{}'.format(user_id)
+        a_id = '{}'.format(activity_id)
+
+        self.cursor.execute("DELETE FROM mydb.useractivity WHERE "
+                            "mydb.useractivity.userid = " + u_id + " AND mydb.useractivity.activityid = " + a_id+";")
+
+        self.conn.commit()
+
+
+
+
