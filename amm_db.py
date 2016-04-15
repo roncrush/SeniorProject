@@ -181,7 +181,8 @@ class AmmDB(object):
 
         insert_stmt = "UPDATE useractivity SET isApplicant = %s WHERE activityid = %s AND userid = %s"
         data = (is_applicant, activity_id, user_id)
-        self.cursor.execute(insert_stmt,data)
+
+        self.cursor.execute(insert_stmt, data)
         self.conn.commit()
 
     def edit_user(self, user_id='', email='', fname='', lname='', passwd='', phone=''):
