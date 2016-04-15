@@ -183,6 +183,7 @@
                 method: "POST",
                 url: '/rosters',
                 data: {
+                    action: "kick",
                     activityID: activityID,
                     playerID: selectedUserID
                 }
@@ -190,9 +191,6 @@
             .done(function(){
                 alert("Player added successfully")
             });
-
-
-
         }
 
         function kickPlayerFromActivity(){
@@ -207,6 +205,19 @@
             selectedName = values[2];
 
             $('.approved-list').find('.ui-selected').remove();
+
+            $.ajax({
+                method: "POST",
+                url: '/rosters',
+                data: {
+                    action: "kick",
+                    activityID: activityID,
+                    playerID: selectedUserID
+                }
+            })
+            .done(function(){
+                alert("Player kicked successfully")
+            });
         }
 
         function getTimeFromDateTime(datetime, duration) {

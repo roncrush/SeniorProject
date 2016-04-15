@@ -185,9 +185,12 @@ def rosters():
     if request.method == 'POST':
         activityID = request.form['activityID']
         playerID = request.form['playerID']
-        print(activityID, playerID)
 
-        db.edit_user_activity_is_applicant(playerID, activityID, 0)
+        if request.form['action']=='add':
+            db.edit_user_activity_is_applicant(playerID, activityID, 0)
+
+        elif request.form['action'] == 'kick':
+            db.kick_user_from_activity(playerID, activityID)
 
     return render_template('RostersPage.html', user=user_info, activities=act_list,
                            maps_key=utilities.get_key('google_maps'))
@@ -198,18 +201,6 @@ def logout():
         return redirect(url_for('main_page'))
     session.clear()
     return redirect(url_for('main_page'))
-
-'''@app.route('/addUserToActivity', methods=['POST'])
-def addUserToActivity():
-    if session.get('user_id', None) is None:
-        return redirect(url_for('main_page'))
-    else:
-        if request.method == 'POST':
-            activityID = request.form['activityID']
-            playerID = request.form['playerID']
-            print(activityID, playerID)
-
-            db.edit_user_activity_is_applicant(playerID,activityID,0)'''
 
 
 if __name__ == '__main__':

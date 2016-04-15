@@ -265,3 +265,12 @@ class AmmDB(object):
         data = self.cursor.fetchall()
 
         return data
+
+    def kick_user_from_activity(self, user_id, activity_id):
+        self.conn_check()
+
+        insert_stmt = "DELETE FROM useractivity WHERE activityid = %s AND userid = %s"
+        data = (activity_id, user_id)
+
+        self.cursor.execute(insert_stmt, data)
+        self.conn.commit()
