@@ -201,7 +201,7 @@ def rosters():
         playerID = request.form['playerID']
         print(activityID, playerID)
 
-        db.edit_user_activity_is_applicant(playerID,activityID,0)
+        db.edit_user_activity_is_applicant(playerID, activityID, 0)
 
     return render_template('RostersPage.html', user=user_info, activities=act_list,
                            maps_key=utilities.get_key('google_maps'))

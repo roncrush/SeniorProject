@@ -105,7 +105,7 @@
                     approvedList = [];
                     $.getJSON('{{ url_for('rosters') }}', {loadActivityID: activityID}).done(function (json) {
                         $.each(json.users, function (index, value) {
-                            if(value.approved == 1){
+                            if(value.approved == 0){
                                 approvedList.push('<li><a href="#!"><div class="flow-text white-text"><span class="playerName">' + value.uname + '</span>' +
                                         '</div><input hidden name="user-id" value="' + value.id +'"> </a></li>');
                             }
