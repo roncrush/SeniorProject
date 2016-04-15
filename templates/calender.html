@@ -32,26 +32,39 @@
                             {% if activity['datetime'].day == day.day %}
                                 class="green lighten-1">
                                 <script>
+
                                     $(document).ready(function () {
                                         $('#day_{{ day }}').find('a').prop("href", "#activity-modal-{{ day }}");
                                         $('#day_{{ day }}').find('a').prop("class", "modal-trigger");
                                         $('.{{ day }}-modal-content').append(
+                                                '<form method="POST">'+
                                                 '<div class="card blue lighten-1"> ' +
                                                 '<div class="card-content white-text"> ' +
+                                                '<input type="hidden" name="act_id" value="{{ activity.activity_id }}"<br>' +
                                                 '<span class="card-title">{{ activity.activity_name }}</span> ' +
                                                 '<h6 id="{{ address }}-{{ activity.activity_id }}">' +
                                                 setAddress({{ activity.latitude | float}}, {{ activity.longitude | float}}, "{{ address }}-{{ activity.activity_id }}") +
                                                 '</h6>' +
                                                 '<h6>From ' + getTimeFromDateTime ({{ activity['time'] }}, {{ activity['duration'] }}) +
                                                 {% if user[0]['id'] != activity.leader %}
-                                                    '<button id="left_activity" class="btn red right" onclick="'+leftActivity({{ user[0]['id'], activity.activity_id }})+'">Leave Activity</button>'+
+                                                    '<input type="hidden" name="use_id" value="{{ user[0]['id'] }}">' +
+                                                    '<input type="submit" class="btn red right" value="Leave Activity">'+
                                                 {% else %}
                                                         //do nothing
                                                 {% endif %}
                                                     '</h6></div> ' +
-                                                '</div>'
+                                                '</div>'+
+                                                '</form>'
+
+
+
+
                                         )
                                     });
+
+
+
+
                                 </script>
                                 <dummy-tag
                             {% endif %}
@@ -73,16 +86,6 @@
     });
 
 
-    function leftActivity(user_id, activity_id) {
-
-        var ID = {"u_id": user_id, "a_id": activity_id};
-
-        $.ajax({
-            type: 'POST',
-            data: ID.data(),
-            url: "/leave_activity"
-        });
-    }
 
 
 

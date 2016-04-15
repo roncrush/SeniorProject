@@ -132,12 +132,17 @@ def search():
                                maps_key=utilities.get_key('google_maps'))
 
 
-@app.route('/calender')
+@app.route('/calender', methods=['POST', 'GET'])
 def calender():
     if session.get('user_id', None) is None:
         return redirect(url_for('main_page'))
     user_info = db.get_user(session.get('user_id'))
     date = calendar.Calendar(6).monthdatescalendar(datetime.datetime.utcnow().year, datetime.datetime.utcnow().month)
+
+    if request.method == 'POST':
+        u_id = request.form['use_id']
+        a_id = request.form['act_id']
+        db.leave_activity(u_id, a_id)
 
     act_list = []
     activities = db.get_user_activity(user_id=user_info[0]['id'])
@@ -152,19 +157,6 @@ def calender():
                            maps_key=utilities.get_key('google_maps'))
 
 
-@app.route('/leave_activity', methods=['POST', 'GET'])
-def leave_activity():
-
-    data = request.form.get('data')
-    u_id = data['user_id']
-    a_id = data['activity_id']
-    print(data)
-    print(u_id)
-    print(a_id)
-   # print(user_id)
-    #print(activity_id)
-    #db.leave_activity(u_id, a_id)
-    return redirect(url_for('calender'))
 
 
 @app.route('/rosters', methods=['GET', 'POST'])
