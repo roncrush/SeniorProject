@@ -121,7 +121,7 @@ def search():
             return render_template('SearchResultsPage.html', user=user_info, results=results, categories=categories,
                                    maps_key=utilities.get_key('google_maps'))
         else:
-            db.add_user_activity(user_info[0]['id'], request.form['activity-id'])
+            db.add_user_activity(user_info[0]['id'], request.form['activity-id'], request.form['activity-private'])
             utilities.send_email(user_info[0]['email'], 'Activity Joined', 'You joined: ' +
                                  request.form['activity-name-item'])
 
