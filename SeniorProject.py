@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect, url_for, jsonify
+from flask import Flask, render_template, request, session, redirect, url_for, jsonify, json
 from flask.ext.bcrypt import Bcrypt
 import utilities
 import amm_db
@@ -99,9 +99,8 @@ def create_event():
 
         db.add_activity(name=activity_name, category=category, datetime=datetime, duration=duration, latitude=latitude,
                         longitude=longitude, numplayers=num_of_players, skill=skill, private=private, leader=session.get
-                        ('user_id'), available=1)
-        db.add_user_activity(session.get('user_id'), db.get_activity(name=activity_name, category=category, skill=skill,
-                                                                     leader=session.get('user_id')))
+            ('user_id'), available=1)
+
         redirect(url_for('home'))
 
     return render_template('create_event.html', key=utilities.get_key('google_maps'), user=user_info,
@@ -112,33 +111,84 @@ def create_event():
 def search():
     if session.get('user_id', None) is None:
         return redirect(url_for('main_page'))
+
     user_info = db.get_user(session.get('user_id'))
-    categories = db.get_activity_type()
+
+    db_categories = db.get_activity_type()
+    categories = {}
+    i = 0
+    for x in db_categories:
+        key = db_categories[i]['id']
+        value = db_categories[i]['category_name']
+        categories[key] = value
+        i += 1
+
+    skills = {0: 'Any', 1: 'Beginner', 2: 'Intermediate', 3: 'Expert', 4: 'Master'}
+    access = {0: 'Public', 1: 'Private'}
+
+    user_activities = {}
+    db_user_activities = db.get_all_user_activities()
+    i = 0
+    for u_acts in db_user_activities:
+        value = [u_acts['userid']]
+        key = u_acts['activityid']
+        if len(user_activities) > 0:
+            if user_activities.get(key) != None:
+                user_activities[key].append(value)
+            else:
+                user_activities[key] = value
+        else:
+            user_activities[key] = value
+        i += 1
+
+
 
     if request.method == 'POST':
         if request.form.get('join', None) is None:
             activity_name = request.form['activity-name']
             results = db.get_activity(name=activity_name)
-            return render_template('SearchResultsPage.html', user=user_info, results=results, categories=categories,
+
+            return render_template('SearchResultsPage.html',
+                                   user=user_info,
+                                   u_activities=user_activities,
+                                   results=results,
+                                   a=access,
+                                   skills=skills,
+                                   categories=categories,
                                    maps_key=utilities.get_key('google_maps'))
         else:
             db.add_user_activity(user_info[0]['id'], request.form['activity-id'], request.form['activity-private'])
             utilities.send_email(user_info[0]['email'], 'Activity Joined', 'You joined: ' +
                                  request.form['activity-name-item'])
 
-            return render_template('SearchResultsPage.html', user=user_info, categories=categories,
+            return render_template('SearchResultsPage.html',
+                                   user=user_info,
+                                   u_activities=user_activities,
+                                   categories=categories,
+                                   a=access,
+                                   skills=skills,
                                    maps_key=utilities.get_key('google_maps'))
     else:
-        return render_template('SearchResultsPage.html', user=user_info, categories=categories,
+        return render_template('SearchResultsPage.html',
+                               user=user_info,
+                               u_activities=user_activities,
+                               categories=categories,
+                               a=access,
+                               skills=skills,
                                maps_key=utilities.get_key('google_maps'))
 
 
-@app.route('/calender')
+@app.route('/calender', methods=['POST', 'GET'])
 def calender():
     if session.get('user_id', None) is None:
         return redirect(url_for('main_page'))
     user_info = db.get_user(session.get('user_id'))
     date = calendar.Calendar(6).monthdatescalendar(datetime.datetime.utcnow().year, datetime.datetime.utcnow().month)
+
+    if request.method == 'POST':
+        u_id = request.form['use_id']
+        a_id = request.form['act_id']
+        db.leave_activity(u_id, a_id)
 
     act_list = []
     activities = db.get_user_activity(user_id=user_info[0]['id'])
@@ -147,8 +197,8 @@ def calender():
         activity_details['latitude'] = float(activity_details['latitude'])
         activity_details['longitude'] = float(activity_details['longitude'])
         activity_details['time'] = int(time.mktime(activity_details['datetime'].timetuple())) * 1000
-        act_list.append(activity_details)
 
+        act_list.append(activity_details)
     return render_template('calender.html', user=user_info, date=date, activities=act_list,
                            maps_key=utilities.get_key('google_maps'))
 
@@ -186,7 +236,7 @@ def rosters():
         activityID = request.form['activityID']
         playerID = request.form['playerID']
 
-        if request.form['action']=='add':
+        if request.form['action'] == 'add':
             db.edit_user_activity_is_applicant(playerID, activityID, 0)
 
         elif request.form['action'] == 'kick':
@@ -194,6 +244,7 @@ def rosters():
 
     return render_template('RostersPage.html', user=user_info, activities=act_list,
                            maps_key=utilities.get_key('google_maps'))
+
 
 @app.route('/logout')
 def logout():

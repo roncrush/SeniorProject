@@ -7,6 +7,19 @@
     height: 500px;
 }
 
+#map2 {
+    width: 100%;
+    height: 275px;
+}
+
+#rotate_ninety {
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+
 #pac-input::-webkit-input-placeholder {
     color: black;
 }
