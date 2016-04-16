@@ -245,6 +245,16 @@ class AmmDB(object):
 
         return data
 
+    def get_all_user_activities(self):
+
+        self.conn_check()
+
+        self.cursor.execute("SELECT * FROM useractivity")
+
+        data = self.cursor.fetchall()
+
+        return data
+
     def get_user_activity(self, user_id='', activity_id='', is_applicant='', operator='AND'):
         self.conn_check()
 
@@ -274,8 +284,8 @@ class AmmDB(object):
         u_id = '{}'.format(user_id)
         a_id = '{}'.format(activity_id)
 
-        self.cursor.execute("DELETE FROM mydb.useractivity WHERE "
-                            "mydb.useractivity.userid = " + u_id + " AND mydb.useractivity.activityid = " + a_id+";")
+        self.cursor.execute("DELETE FROM useractivity WHERE "
+                            "useractivity.userid = " + u_id + " AND useractivity.activityid = " + a_id)
 
         self.conn.commit()
 

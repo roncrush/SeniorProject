@@ -6,6 +6,7 @@
 
  <!-- Link to Results page css-->
 <link id="results-stylesheet" rel="stylesheet" href="../static/css/ResultsPage.css">
+    <link rel="stylesheet" href="../static/css/create_event-style.css">
 
 {% include "partials/navbar_partial.html" %}
 <div class="row">
@@ -38,6 +39,9 @@
         }
     }
 
+
+
+
     $(function () {
         adjustStyle($(this).width());
         $(window).resize(function () {
@@ -54,5 +58,18 @@
     });
 </script>
 
-<script src="../static/js/resultsDiv.js"></script>
+<!--<script src="../static/js/resultsDiv.js"></script>-->
+    <script>
+        $(document).ready(function () {
+            $('.collapsible').collapsible({
+                        accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+                     });
+            });
+    </script>
+
+
+
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ maps_key }}&libraries=places&callback=initAutocomplete"
+            type="text/javascript"
+    ></script>
 {% endblock content %}
