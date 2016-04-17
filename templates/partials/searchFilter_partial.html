@@ -16,7 +16,9 @@
                        <div class="input-field col s2">
                            <select name="category">
                                {% if categories is not none %}
-                                   <option value="{{ categories['id'] }}">{{ categories['name'] }}</option>
+                                   {% for category in categories %}
+                                       <option value="{{ category.id }}">{{ category.category_name }}</option>
+                                   {% endfor %}
                                {% endif %}
                            </select>
                        </div>

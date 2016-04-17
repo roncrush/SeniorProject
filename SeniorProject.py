@@ -114,14 +114,9 @@ def search():
 
     user_info = db.get_user(session.get('user_id'))
 
-    db_categories = db.get_activity_type()
-    categories = {}
-    i = 0
-    for x in db_categories:
-        key = db_categories[i]['id']
-        value = db_categories[i]['category_name']
-        categories[key] = value
-        i += 1
+    categories = db.get_activity_type()
+    for cat in categories:
+        print(cat)
 
     skills = {0: 'Any', 1: 'Beginner', 2: 'Intermediate', 3: 'Expert', 4: 'Master'}
     access = {0: 'Public', 1: 'Private'}
@@ -140,8 +135,6 @@ def search():
         else:
             user_activities[key] = value
         i += 1
-
-
 
     if request.method == 'POST':
         if request.form.get('join', None) is None:
