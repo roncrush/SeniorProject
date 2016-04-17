@@ -12,21 +12,21 @@ def combine_datetime(date, time_input):
 
 
 def get_key(key_name):
-    with open('C:\wamp\\bin\\apache\\apache2.4.9\cgi-bin\Projects\SeniorProject\key.txt', 'r') as key_file:
+    with open('key.txt', 'r') as key_file:
         for line in key_file:
             if key_name in line:
                 return line.split(':')[1].strip()
     return None
 
 
-def send_email(recipient, subject, message, frm='ActivityMatchMaker@example.com'):
+def send_email(recipient, subject, message, frm="ActivityMatchMaker@example.com"):
     key = get_key('mailgun_key')
     sandbox = get_key('mailgun_sandbox')
-    request_url = 'https://api.mailgun.net/v3/{0}/messages'.format(sandbox)
+    request_url = "https://api.mailgun.net/v3/{0}/messages".format(sandbox)
 
     r.post(request_url, auth=('api', key), data={
-        'from': frm,
-        'to': recipient,
-        'subject': subject,
-        'text': message
+        "from": frm,
+        "to": recipient,
+        "subject": subject,
+        "text": message
     })
