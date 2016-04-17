@@ -13,26 +13,47 @@
                                 </div>
                             </div>
                             <div class="row" style="margin-top: -1.5em;">
-
+                                <div class="col s4"><span class="flow-text" style="color:darkblue"><b>Skill: </b></span></div>
                                 <div class="col s4"><span class="flow-text" style="color:darkblue">{{ skills[record.skill] }}</span></div>
                             </div>
                         </div>
                         <div class="col s2">
-                            <ul style="list-style: none;">
-                                <!--<li class="red" id="Location" style="margin-bottom: -.5em;">{{ record.latitude }}</li>-->
-                                <li id="Date" style="margin-bottom: -.5em; color: darkblue; font: caption">{{ record.datetime }}</li>
-                                <li id="Time">Time</li>
-                            </ul>
+                            <div class="row">
+                                <span class="flow-text"
+                                style="color:darkblue; font: caption"><b>Location:</b>
+                                </span>
+                            </div>
                         </div>
                         <div class="col s2">
-                            <span class="flow-text"
-                                style="color:darkblue">
-                                    {{ categories[record.category] }}
-                            </span>
-                        </div>
-                        <div class="col s4">
                             <div class="row">
-                                <span class="col offset-s9 s1" style="color: darkblue">{{ a[record.private] }}</span>
+                                <span class="flow-text"
+                                    style="color:darkblue; font: caption"><b>Date Time:</b>
+                                </span>
+                            </div>
+                            <div class="row">
+                                <span class="flow-text"
+                                style="color:darkblue; font: caption">
+                                    {{ record.datetime }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col s2">
+                            <div class="row">
+                                <span class="flow-text"
+                                style="color:darkblue; font: caption"><b>Category:</b>
+                                </span>
+                            </div>
+                            <div class="row">
+                                <span class="flow-text"
+                                style="color:darkblue; font: caption">
+                                    {{ categories[record.category] }}
+                                </span>
+                            </div>
+
+                        </div>
+                        <div class="col s2">
+                            <div class="row">
+                                <span class="col s6" style="color: darkblue">{{ a[record.private] }}</span>
                             </div>
                             <div class="row">
                                 <span class="col s6 cyan darken-3 z-depth-2">
