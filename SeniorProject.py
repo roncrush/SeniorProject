@@ -240,7 +240,7 @@ def rosters():
             db.edit_user_activity_is_applicant(playerID, activityID, 0)
 
         elif request.form['action'] == 'kick':
-            db.kick_user_from_activity(playerID, activityID)
+            db.leave_activity(user_id=playerID, activity_id=activityID)
 
     return render_template('RostersPage.html', user=user_info, activities=act_list,
                            maps_key=utilities.get_key('google_maps'))
