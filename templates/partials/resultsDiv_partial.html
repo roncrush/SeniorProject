@@ -8,39 +8,23 @@
 
                         <div class="col s4">
                             <div class="row">
-                                <div class="col s10 cyan darken-3 z-depth-2" style="margin-top: .5em;text-align: center;">
+                                <div class="col s10 cyan darken-3 z-depth-2" style="margin-top: 2em;text-align: center;">
                                     <span class="flow-text">{{ record.activity_name }}</span>
                                 </div>
                             </div>
-                            <div class="row" style="margin-top: -1.5em;">
-                                <div class="col s4"><span class="flow-text" style="color:darkblue"><b>Skill: </b></span></div>
-                                <div class="col s4"><span class="flow-text" style="color:darkblue">{{ skills[record.skill] }}</span></div>
-                            </div>
                         </div>
-                        <div class="col s2">
+                        <div class="col s4">
                             <div class="row">
                                 <span class="flow-text"
-                                style="color:darkblue; font: caption"><b>Location:</b>
+                                style="color:darkblue"><b>Location:</b>
                                 </span>
                             </div>
                         </div>
-                        <div class="col s2">
+
+                        <div class="col s4">
                             <div class="row">
                                 <span class="flow-text"
-                                    style="color:darkblue; font: caption"><b>Date Time:</b>
-                                </span>
-                            </div>
-                            <div class="row">
-                                <span class="flow-text"
-                                style="color:darkblue; font: caption">
-                                    {{ record.datetime }}
-                                </span>
-                            </div>
-                        </div>
-                        <div class="col s2">
-                            <div class="row">
-                                <span class="flow-text"
-                                style="color:darkblue; font: caption"><b>Category:</b>
+                                style="color:darkblue"><b>Category:</b>
                                 </span>
                             </div>
                             <div class="row">
@@ -48,17 +32,6 @@
                                 style="color:darkblue; font: caption">
                                     {{ categories[record.category] }}
                                 </span>
-                            </div>
-
-                        </div>
-                        <div class="col s2">
-                            <div class="row">
-                                <span class="col s6" style="color: darkblue">{{ a[record.private] }}</span>
-                            </div>
-                            <div class="row">
-                                <span class="col s6 cyan darken-3 z-depth-2">
-                                          {%print(u_activities[record.activity_id]|length) %} / {{ record.numplayers }}</span>
-
                             </div>
                         </div>
                     </div>
@@ -140,13 +113,32 @@
                 </script>
                     <div class="row">
 
-                        <div class="col s8 map-container">
+                        <div class="col s4 map-container">
                                 <div id="map2">
-
+                                     <div class="row" style="margin-top: 5em">
+                                        <span class="flow-text" style="color:darkblue"><b>Map:</b>
+                                        </span>
+                                     </div>
                                 </div>
-
                         </div>
-                        <div class="col s4" style="margin-top: 6em; vert-align: bottom">
+
+                        <div class="col s4" style="vert-align: bottom"; align="middle">
+                            <div class="row" style="margin-top: 5em">
+                                <span class="flow-text"
+                                      style="color:darkblue"><b>Date Time:</b>
+                                </span>
+                            </div>
+                            <div class="row">
+                                <span class="flow-text"
+                                      style="color:darkblue; font: caption">
+                                    {{ record.datetime }}
+                                </span>
+                            </div>
+                            <div class="row" style="margin-top: 5em">
+                                <span class="flow-text"
+                                      style="color:darkblue">
+                                </span>
+                            </div>
                             <form method="post">
                                 {% if user[0]['id'] != record.leader %}
                                     {% if user[0]['id'] in u_activities[record.activity_id] %}
@@ -174,7 +166,34 @@
                                 <input class="red" value="{{ record.private }}" name="activity-private" hidden>
                             </form>
                         </div>
-
+                        <div class="col s2">
+                            <div class="row" style="margin-top: 5em">
+                                <span class="flow-text"
+                                      style="color:darkblue"><b>Skill:</b>
+                                </span>
+                            </div>
+                            <div class="row">
+                                <span class="flow-text"
+                                      style="color:darkblue; font: caption">
+                                    {{ skills[record.skill] }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col s2">
+                            <div class="row" style="margin-top: 5em"; align="left">
+                                <span class="flow-text"
+                                      style="color:darkblue"><b>Status:</b>
+                                </span>
+                            </div>
+                            <div class="row">
+                                <span class="col s6" style="color: darkblue">{{ a[record.private] }}</span>
+                            </div>
+                            <div class="row">
+                                <span class="col s6 cyan darken-3 z-depth-2">
+                                    {%print(u_activities[record.activity_id]|length) %} / {{ record.numplayers }}
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </li>
