@@ -135,11 +135,11 @@ class AmmDB(object):
 
         for param, value in params.items():
             if value != '':
-                if param == 'name':
+                if param == 'activity_name':
                     where_query += self.get_where_stmnt(where_query, param, value, operator, 'like')
                 else:
                     where_query += self.get_where_stmnt(where_query, param, str(value), operator)
-
+        print(where_query)
         self.cursor.execute("SELECT * FROM activity " + where_query)
         data = self.cursor.fetchall()
 
