@@ -1,207 +1,218 @@
 {% extends "template.html" %}
 {% block header %}
-{{ super() }}
+    {{ super() }}
 {% endblock header %}
 {% block content %}
-{% include "partials/navbar_partial.html" %}
+    {% include "partials/navbar_partial.html" %}
+    <link rel="stylesheet" href="../static/css/mainPage.css">
 
+    <div class="mainBackgroundDiv">
+        <div class="mainPart">
+            <div class="row">
+                <div class="col m7 s12 mottoDiv">
+                    <h2 class="white-text">Make every day an activity worth joining.</h2>
+                    <h5 class="white-text">Sign-up now to join the community.</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col m5 s11 divider"></div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <a class="btn-large waves-effect waves-light teal modal-trigger"
+                       href="#modal2">Login</a>
 
-<!--Import mainPage.css-->
-<link rel="stylesheet" href="../static/css/mainPage.css">
+                </div>
+                <div class="col">
+                    <a class="btn-large waves-effect waves-light teal modal-trigger"
+                       href="#modal1">Sign-Up</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<!-- HTML for mainpage layout-->
-<div class="mainBackgroundDiv grey lighten-3 z-depth-3"></div>
-<div class="mainPictureContainer z-depth-3">
-    <img id="mainPictureImage" src="http://www.hdwallpapera.com/wp-content/uploads/wallpaper/hdwallpap/wallpapers-012/hd%20sports%20in%20air%20activities%20wallpapers.jpg"
-         class="mainPicture responsive-img">
-    <div id="mainPictureOverlay" class="mainPicture black">
-        <div class="overlayTextContainer">
-            <div class="section white-text">
-                <h2>Make every day an activity worth joining.</h2>
-                <p style="font-size: 1.2em">Sign-up now to join the community.</p>
-            </div>
-            <div class="divider white"></div>
-            <div class="row" style="margin-top: 1em">
-                <a class=" col l5 btn-large waves-effect waves-light teal darken-3 modal-trigger"
-                   href="#modal2">Login</a>
-                <a class=" col l5 btn-large waves-effect waves-light offset-l2 teal darken-3 modal-trigger"
-                   href="#modal1">Sign-Up</a>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row mainTextBoxContainer">
-    <div class="col mainSideTextbox">
-        <div class="card">
-            <div class="card-image">
-                <img src="http://www.mstoic.com/wp-content/uploads/2012/01/Facebook-Big-Chat-Hack.png">
-                <span class="card-title"></span>
-            </div>
-            <div class="card-content black white-text">
-                <p>Check out some previous activities on Facebook!</p>
-            </div>
-            <div class="card-action">
-                <a href="http://www.facebook.com" target="_blank">Facebook.com</a>
-            </div>
-        </div>
-    </div>
-    <div class="col mainCenterTextbox">
-        <div class="card">
-            <div class="card-image">
-                <img src="https://cdn2.iconfinder.com/data/icons/New-Social-Media-Icon-Set-V11/512/reddit.png">
-                <span class="card-title"></span>
-            </div>
-            <div class="card-content black white-text">
-                <p>See some of our participants favorite activities on Reddit!</p>
-            </div>
-            <div class="card-action">
-                <a href="http://www.reddit.com" target="_blank">Reddit.com</a>
-            </div>
-        </div>
-    </div>
-    <div class="col mainSideTextbox">
-        <div class="card">
-            <div class="card-image">
-                <img src="http://3.bp.blogspot.com/-R6DZDl89zHc/VIh07TXqJkI/AAAAAAAAE9o/UNG-aJ_pjXQ/s1600/youtube_circle_black-512.png">
-                <span class="card-title">Youtube</span>
-            </div>
-            <div class="card-content black white-text">
-                <p>Subscribe to our Youtube channel!</p>
-            </div>
-            <div class="card-action">
-                <a href="http://www.youtube.com" target="_blank">Youtube.com</a>
-            </div>
-        </div>
-    </div>
-</div>
-<footer class="page-footer cyan darken-4">
-    <div class="container">
+    <div class="cardsPart center-align">
         <div class="row">
-            <div class="col l6 s12">
-                <h5 class="white-text">The Activity Matchmaker</h5>
-                <p class="grey-text text-lighten-4">The Activity Matchmaker was created by:</p>
-                <p class="grey-text text-lighten-4">Hassaan Syed Ali</p>
-                <p class="grey-text text-lighten-4">Erik Chesnut</p>
-                <p class="grey-text text-lighten-4">Alex Evans</p>
-                <p class="grey-text text-lighten-4">Harrison Jordan</p>
-                <p class="grey-text text-lighten-4">Ronnie Kelsey</p>
-            </div>
-            <div class="col l4 offset-l2 s12">
-                <h5 class="white-text">Links</h5>
-                <ul>
-                    <li><a class="grey-text text-lighten-3" href="#!">Help</a></li>
-                    <li><a class="grey-text text-lighten-3" href="#!">The Creators</a></li>
-                    <li><a class="grey-text text-lighten-3" href="#!">Careers</a></li>
-                    <li><a class="grey-text text-lighten-3" href="#!">Contact Us</a></li>
-                </ul>
+            <div class="col m12 l10 offset-l1">
+                <div class="row">
+                    <div class="col s12 m4 youtube-card">
+                        <div class="card">
+                            <div class="card-image">
+                                <p align="center">
+                                    <img src="../static/images/youtube-icon.png" class="responsive-img" style="width: 50%">
+                                </p>
+                            </div>
+                            <div class="card-content black white-text">
+                                <p>Subscribe to our Youtube channel!</p>
+                            </div>
+                            <div class="card-action">
+                                <a href="http://www.youtube.com" target="_blank">Youtube.com</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s12 m4 reddit-card">
+                        <div class="card">
+                            <div class="card-image">
+                                <p align="center">
+                                    <img src="../static/images/reddit-icon.png" class="responsive-img" style="width: 50%">
+                                </p>
+                            </div>
+                            <div class="card-content black white-text">
+                                <p>See some of our participants' favorite activities on Reddit!</p>
+                            </div>
+                            <div class="card-action">
+                                <a href="http://www.reddit.com" target="_blank">Reddit.com</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s12 m4 facebook-card">
+                        <div class="card">
+                            <div class="card-image">
+                                <p align="center">
+                                    <img src="../static/images/facebook-icon.png" class="responsive-img" style="width: 50%">
+                                </p>
+                            </div>
+                            <div class="card-content black white-text">
+                                <p>Check out some previous activities on Facebook!</p>
+                            </div>
+                            <div class="card-action">
+                                <a href="http://www.facebook.com" target="_blank">Facebook.com</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="footer-copyright">
+
+    <footer class="page-footer cyan darken-4">
         <div class="container">
-            © 2016 Copyright AMM™
-            <a class="grey-text text-lighten-4 right" href="#!"></a>
+            <div class="row">
+                <div class="col l6 s12">
+                    <h5 class="white-text">The Activity Matchmaker</h5>
+                    <p class="grey-text text-lighten-4">The Activity Matchmaker was created by:</p>
+                    <p class="grey-text text-lighten-4">Hassaan Syed Ali</p>
+                    <p class="grey-text text-lighten-4">Erik Chesnut</p>
+                    <p class="grey-text text-lighten-4">Alex Evans</p>
+                    <p class="grey-text text-lighten-4">Harrison Jordan</p>
+                    <p class="grey-text text-lighten-4">Ronnie Kelsey</p>
+                </div>
+                <div class="col l4 offset-l2 s12">
+                    <h5 class="white-text">Links</h5>
+                    <ul>
+                        <li><a class="grey-text text-lighten-3" href="#!">Help</a></li>
+                        <li><a class="grey-text text-lighten-3" href="#!">The Creators</a></li>
+                        <li><a class="grey-text text-lighten-3" href="#!">Careers</a></li>
+                        <li><a class="grey-text text-lighten-3" href="#!">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                © 2016 Copyright AMM™
+                <a class="grey-text text-lighten-4 right" href="#!"></a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="modal1" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <h4>Sign-up!</h4>
+            <form class="col s12" method="post" action="{{ url_for('main_page') }}">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input id="first_name" name="first_name" type="text" class="validate">
+                        <label for="first_name">First Name</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="last_name" name="last_name" type="text" class="validate">
+                        <label for="last_name">Last Name</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="email" name="email" type="email" class="validate">
+                        <label for="email">Email</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="confirmEmail" name="conifirmEmail" type="email" class="validate">
+                        <label for="confirmEmail">Confirm Email</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input id="username" name="username" type="text" class="validate">
+                        <label for="username">Username</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input id="password" name="password" type="password" class="validate">
+                        <label for="password">Password</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="confirmPassword" name="confirmPassword" type="password" class="validate">
+                        <label for="confirmPassword">Confirm Password</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="s12 center">
+                        <input type="submit" class="modal-action btn-flat cyan darken-3 white-text"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-red btn-flat">Close</a>
         </div>
     </div>
-</footer>
 
-<div id="modal1" class="modal modal-fixed-footer">
-    <div class="modal-content">
-        <h4>Sign-up!</h4>
-        <form class="col s12" method="post" action="{{ url_for('main_page') }}">
-            <div class="row">
-                <div class="input-field col s6">
-                    <input id="first_name" name="first_name" type="text" class="validate">
-                    <label for="first_name">First Name</label>
+    <div id="modal2" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <h4>Sign-in</h4>
+            <form class="col s12" method="post" action="{{ url_for('main_page') }}">
+                <div class="row">
+                    <div class="input-field col s6 offset-s3">
+                        <input id="username" name="username-login" type="text" class="validate">
+                        <label for="username">Username</label>
+                    </div>
                 </div>
-                <div class="input-field col s6">
-                    <input id="last_name" name="last_name" type="text" class="validate">
-                    <label for="last_name">Last Name</label>
+                <div class="row">
+                    <div class="input-field col s6 offset-s3">
+                        <input id="password" name="password-login" type="password" class="validate">
+                        <label for="password">Password</label>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    <input id="email" name="email" type="email" class="validate">
-                    <label for="email">Email</label>
+                {% if error is defined %}
+                    <div class="row">
+                        <div class="s12 center">
+                            <h5 class="login-error">{{ error }}</h5>
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="row">
+                    <div class="s12 center">
+                        <input type="submit" class="modal-action btn-flat cyan darken-3 white-text"/>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    <input id="confirmEmail" name="conifirmEmail" type="email" class="validate">
-                    <label for="confirmEmail">Confirm Email</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s6">
-                    <input id="username" name="username" type="text" class="validate">
-                    <label for="username">Username</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s6">
-                    <input id="password" name="password" type="password" class="validate">
-                    <label for="password">Password</label>
-                </div>
-                <div class="input-field col s6">
-                    <input id="confirmPassword" name="confirmPassword" type="password" class="validate">
-                    <label for="confirmPassword">Confirm Password</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="s12 center">
-                    <input type="submit" class="modal-action btn-flat cyan darken-3 white-text"/>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-red btn-flat">Close</a>
+        </div>
     </div>
-    <div class="modal-footer">
-        <a href="#!" class=" modal-action modal-close waves-effect waves-red btn-flat">Close</a>
-    </div>
-</div>
+    <script>
+        $(document).ready(function () {
+            // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+            $('.modal-trigger').leanModal();
 
-<div id="modal2" class="modal modal-fixed-footer">
-    <div class="modal-content">
-        <h4>Sign-in</h4>
-        <form class="col s12" method="post" action="{{ url_for('main_page') }}">
-            <div class="row">
-                <div class="input-field col s6 offset-s3">
-                    <input id="username" name="username-login" type="text" class="validate">
-                    <label for="username">Username</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s6 offset-s3">
-                    <input id="password" name="password-login" type="password" class="validate">
-                    <label for="password">Password</label>
-                </div>
-            </div>
             {% if error is defined %}
-            <div class="row">
-                <div class="s12 center">
-                    <h5 class="login-error">{{ error }}</h5>
-                </div>
-            </div>
+                $('#modal2').openModal();
             {% endif %}
-            <div class="row">
-                <div class="s12 center">
-                    <input type="submit" class="modal-action btn-flat cyan darken-3 white-text"/>
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <a href="#!" class=" modal-action modal-close waves-effect waves-red btn-flat">Close</a>
-    </div>
-</div>
-<script>
-    $(document).ready(function () {
-        // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-        $('.modal-trigger').leanModal();
 
-        {% if error is defined %}
-            $('#modal2').openModal();
-        {% endif %}
-
-    });
-</script>
+        });
+    </script>
 {% endblock content %}
