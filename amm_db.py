@@ -139,7 +139,7 @@ class AmmDB(object):
                     where_query += self.get_where_stmnt(where_query, param, value, operator, 'like')
                 else:
                     where_query += self.get_where_stmnt(where_query, param, str(value), operator)
-        print(where_query)
+
         self.cursor.execute("SELECT * FROM activity " + where_query)
         data = self.cursor.fetchall()
 
@@ -170,7 +170,8 @@ class AmmDB(object):
                 else:
                     where_query += self.get_where_stmnt(where_query, param, str(value), operator)
 
-        self.cursor.execute("SELECT * FROM activity INNER JOIN activitytype ON id = activity_id" + where_query)
+        self.cursor.execute("SELECT * FROM activity INNER JOIN activitytype ON id = category" + where_query)
+
         data = self.cursor.fetchall()
 
         return data
