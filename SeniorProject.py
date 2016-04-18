@@ -100,6 +100,7 @@ def create_event():
         db.add_activity(name=activity_name, category=category, datetime=datetime, duration=duration, latitude=latitude,
                         longitude=longitude, numplayers=num_of_players, skill=skill, private=private, leader=session.get
             ('user_id'), available=1)
+        utilities.send_email([user_info[0]['email']], 'Activity Created', 'You successfully created an activity!')
 
         redirect(url_for('home'))
 
@@ -140,7 +141,6 @@ def search():
         if request.form.get('join', None) is None:
             activity_name = request.form['activity-name']
             results = db.get_activity(name=activity_name)
-
             return render_template('SearchResultsPage.html',
                                    user=user_info,
                                    u_activities=user_activities,
@@ -151,8 +151,8 @@ def search():
                                    maps_key=utilities.get_key('google_maps'))
         else:
             db.add_user_activity(user_info[0]['id'], request.form['activity-id'], request.form['activity-private'])
-            utilities.send_email(user_info[0]['email'], 'Activity Joined', 'You joined: ' +
-                                 request.form['activity-name-item'])
+            if request.form['activity-private'] == '0':
+                utilities.send_email([user_info[0]['email']], 'Activity Joined', 'You successfully joined an activity!')
 
             return render_template('SearchResultsPage.html',
                                    user=user_info,
@@ -228,12 +228,15 @@ def rosters():
     if request.method == 'POST':
         activityID = request.form['activityID']
         playerID = request.form['playerID']
+        playerUsr = db.get_user(playerID)
 
         if request.form['action'] == 'add':
             db.edit_user_activity_is_applicant(playerID, activityID, 0)
+            utilities.send_email(playerUsr[0]['email'], 'Activity Request Accepted', 'You were accepted to an activity!')
 
         elif request.form['action'] == 'kick':
             db.leave_activity(user_id=playerID, activity_id=activityID)
+            utilities.send_email(playerUsr[0]['email'], 'Removed From Activity', 'You were kicked from an activity!')
 
     return render_template('RostersPage.html', user=user_info, activities=act_list,
                            maps_key=utilities.get_key('google_maps'))
