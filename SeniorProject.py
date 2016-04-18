@@ -116,8 +116,6 @@ def search():
     user_info = db.get_user(session.get('user_id'))
 
     categories = db.get_activity_type()
-    for cat in categories:
-        print(cat)
 
     skills = {0: 'Any', 1: 'Beginner', 2: 'Intermediate', 3: 'Expert', 4: 'Master'}
     access = {0: 'Public', 1: 'Private'}
@@ -129,7 +127,7 @@ def search():
         value = [u_acts['userid']]
         key = u_acts['activityid']
         if len(user_activities) > 0:
-            if user_activities.get(key) != None:
+            if user_activities.get(key) is not None:
                 user_activities[key].append(value)
             else:
                 user_activities[key] = value
@@ -140,7 +138,7 @@ def search():
     if request.method == 'POST':
         if request.form.get('join', None) is None:
             activity_name = request.form['activity-name']
-            results = db.get_activity(name=activity_name)
+            results = db.get_act_type_join(name=activity_name)
             return render_template('SearchResultsPage.html',
                                    user=user_info,
                                    u_activities=user_activities,
@@ -206,24 +204,22 @@ def rosters():
     activities = db.get_user_activity(user_id=user_info[0]['id'])
     for activity in activities:
         activity_details = db.get_activity(activity_id=activity['activityid'])[0]
-        activity_details['latitude'] = float(activity_details['latitude'])
-        activity_details['longitude'] = float(activity_details['longitude'])
-        activity_details['time'] = int(time.mktime(activity_details['datetime'].timetuple())) * 1000
-        activity_details['date'] = activity_details['datetime'].date().strftime('%m/%d/%Y')
-        act_list.append(activity_details)
+        if user_info[0]['id'] == activity_details['leader']:
+            activity_details['latitude'] = float(activity_details['latitude'])
+            activity_details['longitude'] = float(activity_details['longitude'])
+            activity_details['time'] = int(time.mktime(activity_details['datetime'].timetuple())) * 1000
+            activity_details['date'] = activity_details['datetime'].date().strftime('%m/%d/%Y')
+            act_list.append(activity_details)
 
-    if request.method == 'GET':
-        if request.args.get('loadActivityID') is not None:
-            print(request.args['loadActivityID'])
-            user_activity = db.get_user_activity(activity_id=request.args['loadActivityID'])
+    if request.args.get('loadActivityID') is not None:
+        user_activity = db.get_user_activity(activity_id=request.args['loadActivityID'])
 
-            users = []
-            for record in user_activity:
-                user = db.get_user(user_id=record['userid'], select='id, uname')[0]
-                user['approved'] = record['isApplicant']
-                users.append(user)
-            print(users)
-            return jsonify(users=users)
+        users = []
+        for record in user_activity:
+            user = db.get_user(user_id=record['userid'], select='id, uname')[0]
+            user['approved'] = record['isApplicant']
+            users.append(user)
+        return jsonify(users=users)
 
     if request.method == 'POST':
         activityID = request.form['activityID']
@@ -234,7 +230,7 @@ def rosters():
             db.edit_user_activity_is_applicant(playerID, activityID, 0)
             utilities.send_email(playerUsr[0]['email'], 'Activity Request Accepted', 'You were accepted to an activity!')
 
-        elif request.form['action'] == 'kick':
+        else:
             db.leave_activity(user_id=playerID, activity_id=activityID)
             utilities.send_email(playerUsr[0]['email'], 'Removed From Activity', 'You were kicked from an activity!')
 
